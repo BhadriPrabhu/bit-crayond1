@@ -4,6 +4,7 @@ import Card from "./card";
 function Totalcard() {
   return (
     <Box>
+      
       <Card/>
     </Box>
   )

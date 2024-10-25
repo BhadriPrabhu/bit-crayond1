@@ -1,0 +1,72 @@
+
+
+const CartStyle = {
+    box1: {padding: "20px", bgcolor: "#253B6E0A", width: "400px", margin: "40px"},
+    box: {padding:"50px"},
+    el1: {bgcolor: "#FFF", width: "303px", height: "230px", position: "relative", backgroundOrigin: "padding-box", boxShadow: "0px 3px 6px #0000000A", border: "1px solid #E4EAEE", borderRadius: "12px", opacity: "1"},
+    el2: {marginLeft: "12px"},
+    el3: { color: "#FFF", bgcolor: "#27AE61", fontSize: "10px", borderRadius: "4px", height: "15px", minWidth: "43px", maxWidth: "57px", position: "relative", top: "5.5px", textTransform: "capitalize"},
+    el4: {width: "9px", height: "9px", backgroundOrigin: "padding-box", opacity: "1", position: "relative", left: "3px"},
+    el5: {fontSize: "10px", display: "inline-block", borderRadius: "4px", height: "15px",width: "40px", bgcolor: "#E74C3C", position: "relative", top: "4px", color: "white", marginLeft: "6px"},
+    el6: {height: "9px", width: "9px", position: "relative", top: "1.5px", left: "4px"},
+    el7: {position: "relative", top: "0.5px", left: "7px"},
+    el8: {marginLeft: "12px", position: "relative", top: "4px"},
+    el9: {display: "inline-block", fontSize: "10px", font: "Poppins"},
+    el10: {display: "inline-block",height: "15px", width: "108px", color: "#535353", letterSpacing: "0px", opacity: "1", lineHeight: "16px", fontWeight: "medium", fontStyle: "normal", fontVariant: "normal", marginRight: "3px"},
+    el11: {position: "relative", top: "-3px",fontWeight: "bolder"},
+    el12: {display: "inline-block", height: "20px", width: "20px", position: "relative", top: "6px", backgroundOrigin: "padding-box", marginRight: "8px", bgcolor: "#F7CBC7"},
+    el13: {width: "11px", height: "11px", position: "relative", top: "5px", left: "5px",bgcolor: "#F9D7D4" },
+    el14: {borderRadius: "4px", textTransform: "capitalize", border: "solid 1px #E74C3C", height: "23px", width: "56px", marginBottom: "3px",bgcolor: "#E74C3C14", color: "#E74C3C", fontWeight: "600", fontStyle: "normal", fontVariant: "normal", fontSize: "10px"},
+    el15: {marginLeft: "30px", display: "inline-block", position: "relative", top: "-28px", left: "192px"},
+    el16: {color: "#8D8D8D", bgcolor: "#FFFFFF", height: "24px", width: "17px", position: "relative"},
+    el17: {display: "inline-block", height: "16px", width: "15px", backgroundOrigin: "padding-box", opacity: "1", padding: "5px", position: "relative", left: "2px"},
+    el18: {color: "#8D8D8D", height: "24px", width: "17px", position: "relative"},
+    el19: {fontSize: "12px", lineHeight: "20px", color: "#101010", width: "250px", height: "37px", textAlign: "left", letterSpacing: "0px", opacity:"1", fontWeight: "medium", fontVariant: "normal", fontStyle: "normal", marginLeft: "12px", position: "relative", top: "-20px"},
+    el20: {fontSize: "10px",lineHeight: "16px", width: "199px",height: "23px", marginLeft: "10px", position: "relative", top: "-2px"},
+    el21: {color: "#535353", bgcolor: "#C6C6C63D", margin: "2px", borderRadius: "4px",padding: "6px 9px"},
+    el22: {display: "inline-block"},
+    el23: {display: "inline-block", opacity: "1", height: "20px",position: "relative", top: "12px"},
+    el24: {display: "inline-block", position: "relative", top: "-26px"},
+    el25: {display: "inline-block", height: "17px", width: "15px", backgroundOrigin: "padding-box", opacity: "1", marginLeft: "12px"},
+    el26: {display: "inline-block", height: "17px", width: "15px", backgroundOrigin: "padding-box", opacity: "1", marginLeft: "6px"},
+    el27: {display: "inline-block", height: "17px", width: "15px", backgroundOrigin: "padding-box", opacity: "1", marginLeft: "6px", overflow: "visible"},
+    el28: {position: "relative", top: "4px", left: "8px", zIndex: "5", color: "#2ECC71"},
+    el29: {position: "relative", top: "4px", left: "-16px", color: "#E4EAEE"},
+    el30: {color: "#8D8D8D", opacity: "1", display: "inline-block", fontSize: "10px", lineHeight: "16px", textAlign: "left", fontWeight: "500", letterSpacing: "0px", position: "relative", top: "-5px", left: "-10px"},
+    el31: {width: "34px", height: "23px", backgroundOrigin: "padding-box" , opacity: "1", border: "1px solid #E4EAEE", borderRadius: "6px", display: "inline-block", margin: "10px", position: "relative", left: "28px", top: "-17px"},
+    el32: {width: "12px", height: "12px", position: "relative", top: "5px", left: "5px"},
+    el33: {display: "inline-block",width: "6px", height: "15px", textAlign: "left", fontSize: "11px", lineHeight: "20px",color: "#101010", opacity: "1",letterSpacing: "0px", fontWeight: "medium", fontStyle: "normal", fontVariant: "normal", position: "relative", top: "-14px", left: "20px"},
+    el34: {display: "inline-block", width: "11px", height: "14px", backgroundOrigin: "padding-box", border: "2px solid #FFFFFF", opacity: "1", position: "relative", top: "-22px", left: "20px"},
+    el35: {display: "inline-block",
+         "& .MuiAutocomplete-popupIndicator": {color: "#101010", position: "relative", left: "10px"},
+         "& .MuiInputLabel-root": {fontSize: "10px", lineHeight: "16px", fontWeight: "500", color: "#101010", letterSpacing: "0px", top: "-11px", left: "2px"},
+         "& .MuiInputLabel-shrink": {display: "none"},
+         "& .MuiOutlinedInput-root": { position: "relative", left: "10px", height: "25px", width: "72px", color: "#101010",
+                "& legend": { width: "0px"},
+                "& fieldset": {
+                    borderColor: "#E4EAEE",
+                },
+                "&:hover fieldset": {
+                    borderColor: "#E4EAEE",
+                },
+                "&.Mui-focused fieldset": {
+                    borderColor: "#E4EAEE",
+                    "& legend": {
+                        display: "none",width: "0px"
+                    },
+                },
+                }},
+    el36: {width: "100px", height: "15px", position: "relative", top: "-40px", left: "15px", fontSize: "7px"},
+
+    el37: {borderTop: "1px", borderStyle: "dashed", color: "#C6C6C699", width: "302px", opacity: "1", position: "relative", top: "-18px" },
+    el38: {display: "inline-block", position: "relative", top: "10px"},
+    el39: {width: "55px", height: "21px", opacity: "1", overflow:"visible",backgroundOrigin: "padding-box", position: "relative", top: "-20px", left: "8px", display: "inline-block"},
+    el40: {width: "14px", height: "16px", backgroundOrigin: "padding-box", opacity: "1", display: "inline-block", position: "relative", top: "-22.5px", left: "14px"},
+    el41: {width: "60px", height: "15px", textAlign: "left", fontSize: "10px", lineHeight: "16px", color: "#535353", opacity: "1", fontStyle: "normal", fontVariant: "normal", fontWeight: "medium", display: "inline-block", position: "relative", top: "-26px", paddingLeft: "2px", left: "14px"},
+    el42: {width: "38px", height: "15px", textAlign: "left", letterSpacing: "0px", opacity: "1", color: "#535353", fontSize: "10px", lineHeight: "16px", fontStyle: "normal", fontVariant: "normal", fontWeight: "medium", display: "inline-block", position: "relative", top: "-26.5px", left: "90px"},
+    el43: {width: "24px", height: "24px", border: "1px dashed #00B7A8", backgroundOrigin: "padding-box", opacity: "1",bgcolor: "#FFFFFF", top: "-49px", left: "267px"},
+    el44: {height: "13px", width: "13px", bgcolor: "#FFFFFF", overflow: "visible"},
+    el45: {display: "inline-block", position: "relative", top: "10px"}
+}
+
+export default CartStyle

@@ -20,16 +20,18 @@ function Card() {
 
   return (
     <ThemeProvider theme={font}>
-      <Box sx={{bgcolor: "#EBECF1", paddingTop: "5px", height: "800px"}}>
+      <Box>
          {   isApp ? (
                  <Typography variant='div' sx={{display: "inline-block"}}>
-                 <Card2/>
+                 <Card2  />
 
                  </Typography>
                   
               ) : (
                 <>
-                <Card1/>
+                {/* { <Card1 LabelText='hidffdfdf' />} */}
+                <Card1  date='Jun 28, 2021' />
+                <Card1 date='Jun 29, 2021' />
                 </>
             )
           }

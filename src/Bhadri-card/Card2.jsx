@@ -11,7 +11,7 @@ import Sortdown40 from './Materials/Sortdown40.png'
 function Card2() {
   return (
    
-    <Box sx={{bgcolor: "#EBECF1", fontFamily: 'Poppins, sans-serif', height: "900px", width: "400px", padding: "0px", margin: "0px", position: "absolute",top: "-5px", left: "-5px" }}>
+    <Box sx={{bgcolor: "#EBECF1", fontFamily: 'Poppins, sans-serif', padding: "0px", margin: "0px", position: "absolute",top: "-5px", left: "-5px" }}>
 
         <Box sx={{bgcolor: "#FFFFFF", height: "260px", width: "360px", borderRadius: "12px", opacity: "1", border: "solid 1px #E4EAEE", boxShadow: "0px 3px 6px #00000014", position: "relative", top: "168px", left: "20px", display: "inline-block"}}>
 
