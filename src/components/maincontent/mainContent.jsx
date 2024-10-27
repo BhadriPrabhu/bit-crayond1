@@ -1,8 +1,8 @@
-import React, { useState } from 'react';  
+import React, { useState } from 'react';   
 import {
   Box, Button, TextField, IconButton, InputAdornment, Divider,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Menu, MenuItem, Select, Typography,Popover
+  Paper, Menu, MenuItem, Select, Typography, Popover
 } from '@mui/material';
 import { MoreVert as MoreVertIcon } from '@mui/icons-material';
 import Searchicon from '../../icons/search';
@@ -25,8 +25,7 @@ const ItemTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [anchorElFilter, setAnchorElFilter] = useState(null);
   const [anchorElAction, setAnchorElAction] = useState(null);
-
-
+  const [filterModalOpen, setFilterModalOpen] = useState(false); // For FilterModal
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
@@ -40,11 +39,13 @@ const ItemTable = () => {
   const handleActionMenuClick = (event) => setAnchorElAction(anchorElAction ? null : event.currentTarget);
   const handleActionMenuClose = () => setAnchorElAction(null);
 
+  const handleFilterIconClick = () => setFilterModalOpen(true);
+  const handleFilterModalClose = () => setFilterModalOpen(false);
+
   const totalRecords = data.length;
   const startRecord = page * rowsPerPage + 1;
   const endRecord = Math.min(totalRecords, startRecord + rowsPerPage - 1);
   const visibleRows = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
 
   const renderPaginationButtons = () => {
     const totalPages = Math.ceil(totalRecords / rowsPerPage);
@@ -117,7 +118,13 @@ const ItemTable = () => {
         {[Sorticons, Filtericons, MoreVertIcon].map((IconComponent, index) => (
           <IconButton
             key={index}
-            onClick={IconComponent === MoreVertIcon ? handleFilterMenuClick : handleFilterMenuClose}
+            onClick={
+              IconComponent === Filtericons
+                ? handleFilterIconClick
+                : IconComponent === MoreVertIcon
+                ? handleFilterMenuClick
+                : undefined
+            }
             disableRipple
             sx={{
               width: 40,
@@ -201,21 +208,20 @@ const ItemTable = () => {
                 </TableCell>
                 <TableCell sx={{ paddingLeft: '16px' }}>{row.category}</TableCell>
                 <TableCell align="right" sx={{ paddingRight: '24px' }}>
-                <Button
+                  <Button
                     variant="contained"
                     size="small"
-                  sx={{
-                     bgcolor: row.status === 'Active' ? '#CBF2E0' : '#FFDAD3',
+                    sx={{
+                      bgcolor: row.status === 'Active' ? '#CBF2E0' : '#FFDAD3',
                       color: '#003D20',
-                      boxShadow: 'none', // Ensures no box shadow
-                      }}
-                      >
+                      boxShadow: 'none',
+                    }}
+                  >
                     {row.status}
-                 </Button>
- 
+                  </Button>
                 </TableCell>
                 <TableCell align="right" sx={{ paddingRight: '8px' }}>
-                <IconButton onClick={(e) => handleActionMenuClick(e)}>
+                  <IconButton onClick={(e) => handleActionMenuClick(e)}>
                     <MoreVertIcon />
                   </IconButton>
                   <Menu anchorEl={anchorElAction} open={Boolean(anchorElAction)} onClose={handleActionMenuClose}>
@@ -265,6 +271,9 @@ const ItemTable = () => {
           </Button>
         </Box>
       </Box>
+
+      {/* FilterModal Component */}
+      {filterModalOpen && <FilterModal open={filterModalOpen} onClose={handleFilterModalClose} />}
     </Box>
   );
 };
