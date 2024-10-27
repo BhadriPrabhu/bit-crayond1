@@ -1,10 +1,23 @@
+import { Toolbar } from "@mui/material";
 import "./App.css";
-import Totalcard from "./Bhadri-card/Total-card"; 
+import ItemTable from "./components/maincontent/mainContent";
+import Sidebar from "./components/sidenavbar/sidenavbar";
+import TopNavbar from "./components/topnavbar/topnavbar";
+import Screen1 from "./screens/itemManagement_screen/screen1";
+import Moreverticon from "./components/moreverticon/Moreverticon";
+import FilterModal from "./components/filtericon/filtericon";
+import Simple from "./components/filtericon/simple";
 
 function App() {
   return (
     <div className="el1">
-      <Totalcard/>
+      {/* <Sidebar/> */}
+      {/* <TopNavbar/> */}
+      {/* <Screen1/> */}
+      <ItemTable/>
+      {/* <Moreverticon/> */}
+      {/* <FilterModal/> */}
+      {/* <Simple/> */}
     </div>  
 
 
