@@ -10,6 +10,7 @@ import Sorticons from '../../icons/sorticons';
 import Filtericons from '../../icons/filtericon';
 import Moreverticons1 from '../moreverticon/Moreverticon';
 import FilterModal from '../filtericon/filtericon';
+import SortByComponent from '../sorticon/sorticon';
 
 const data = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
@@ -24,6 +25,7 @@ const ItemTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [anchorElFilter, setAnchorElFilter] = useState(null);
+  const [anchorElSort, setAnchorElSort] = useState(null);  // State for Sort Popover
   const [anchorElAction, setAnchorElAction] = useState(null);
   const [filterModalOpen, setFilterModalOpen] = useState(false); // For FilterModal
 
@@ -35,6 +37,9 @@ const ItemTable = () => {
 
   const handleFilterMenuClick = (event) => setAnchorElFilter(anchorElFilter ? null : event.currentTarget);
   const handleFilterMenuClose = () => setAnchorElFilter(null);
+
+  const handleSortMenuClick = (event) => setAnchorElSort(anchorElSort ? null : event.currentTarget); // Handle sort click
+  const handleSortMenuClose = () => setAnchorElSort(null);  // Close sort popover
 
   const handleActionMenuClick = (event) => setAnchorElAction(anchorElAction ? null : event.currentTarget);
   const handleActionMenuClose = () => setAnchorElAction(null);
@@ -121,6 +126,8 @@ const ItemTable = () => {
             onClick={
               IconComponent === Filtericons
                 ? handleFilterIconClick
+                : IconComponent === Sorticons
+                ? handleSortMenuClick  // Set the sort click handler
                 : IconComponent === MoreVertIcon
                 ? handleFilterMenuClick
                 : undefined
@@ -140,6 +147,21 @@ const ItemTable = () => {
             <IconComponent />
           </IconButton>
         ))}
+        <Popover
+          open={Boolean(anchorElSort)}
+          anchorEl={anchorElSort}
+          onClose={handleSortMenuClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <SortByComponent />  {/* Render SortByComponent here */}
+        </Popover>
         <Popover
           open={Boolean(anchorElFilter)}
           anchorEl={anchorElFilter}
@@ -224,10 +246,18 @@ const ItemTable = () => {
                   <IconButton onClick={(e) => handleActionMenuClick(e)}>
                     <MoreVertIcon />
                   </IconButton>
-                  <Menu anchorEl={anchorElAction} open={Boolean(anchorElAction)} onClose={handleActionMenuClose}>
-                    <MenuItem onClick={handleActionMenuClose}>Edit</MenuItem>
-                    <MenuItem onClick={handleActionMenuClose}>Delete</MenuItem>
-                  </Menu>
+                  <Menu 
+  anchorEl={anchorElAction} 
+  open={Boolean(anchorElAction)} 
+  onClose={handleActionMenuClose}
+  sx={{ 
+    boxShadow: 'none',  // Remove box shadow
+    '& .MuiPaper-root': { boxShadow: 'none' }  // Ensure paper element also has no shadow
+  }}
+>
+  <MenuItem onClick={handleActionMenuClose}>Edit</MenuItem>
+  <MenuItem onClick={handleActionMenuClose}>Inactive</MenuItem>
+</Menu>
                 </TableCell>
               </TableRow>
             ))}
