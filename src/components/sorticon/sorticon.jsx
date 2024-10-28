@@ -11,7 +11,8 @@ const SortByComponent = () => {
   return (
     <Box
       sx={{
-        width: '200px',
+        width: '170px',
+        height:'160px',
         padding: '16px',
         bgcolor: 'white',
         borderRadius: '8px',

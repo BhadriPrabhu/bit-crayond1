@@ -11,12 +11,13 @@ import Filtericons from '../../icons/filtericon';
 import Moreverticons1 from '../moreverticon/Moreverticon';
 import FilterModal from '../filtericon/filtericon';
 import SortByComponent from '../sorticon/sorticon';
+import AddNewItemPopup from '../newitem_button/Addnewpopup';
 
 const data = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
   itemCode: `00${index + 1}`,
   itemName: ['Levis Shirts', 'Coffee Cup', 'Tea Cup', 'Juice'][index % 4],
-  itemSize: index % 4 === 1 ? 'Large' : '', // separate size for Coffee Cup only
+  itemSize: index % 4 === 1 ? 'Large' : '',
   category: index % 2 === 0 ? 'Shirts' : 'Drinks',
   status: index % 5 === 0 ? 'Inactive' : 'Active'
 }));
@@ -25,9 +26,13 @@ const ItemTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [anchorElFilter, setAnchorElFilter] = useState(null);
-  const [anchorElSort, setAnchorElSort] = useState(null);  // State for Sort Popover
+  const [anchorElSort, setAnchorElSort] = useState(null); 
   const [anchorElAction, setAnchorElAction] = useState(null);
-  const [filterModalOpen, setFilterModalOpen] = useState(false); // For FilterModal
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleSearchChange = (event) => setSearchTerm(event.target.value);
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
@@ -38,8 +43,8 @@ const ItemTable = () => {
   const handleFilterMenuClick = (event) => setAnchorElFilter(anchorElFilter ? null : event.currentTarget);
   const handleFilterMenuClose = () => setAnchorElFilter(null);
 
-  const handleSortMenuClick = (event) => setAnchorElSort(anchorElSort ? null : event.currentTarget); // Handle sort click
-  const handleSortMenuClose = () => setAnchorElSort(null);  // Close sort popover
+  const handleSortMenuClick = (event) => setAnchorElSort(anchorElSort ? null : event.currentTarget);
+  const handleSortMenuClose = () => setAnchorElSort(null); 
 
   const handleActionMenuClick = (event) => setAnchorElAction(anchorElAction ? null : event.currentTarget);
   const handleActionMenuClose = () => setAnchorElAction(null);
@@ -47,10 +52,17 @@ const ItemTable = () => {
   const handleFilterIconClick = () => setFilterModalOpen(true);
   const handleFilterModalClose = () => setFilterModalOpen(false);
 
-  const totalRecords = data.length;
+  const handleOpenPopup = () => setIsPopupOpen(true);
+  const handleClosePopup = () => setIsPopupOpen(false);
+
+  const filteredData = data.filter((row) =>
+    row.itemName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalRecords = filteredData.length;
   const startRecord = page * rowsPerPage + 1;
   const endRecord = Math.min(totalRecords, startRecord + rowsPerPage - 1);
-  const visibleRows = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const visibleRows = filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   const renderPaginationButtons = () => {
     const totalPages = Math.ceil(totalRecords / rowsPerPage);
@@ -91,21 +103,23 @@ const ItemTable = () => {
   };
 
   return (
-    <Box width="1223px" height="656px" display="flex" flexDirection="column" padding="15px" bgcolor="#f5f5f5">
+    <Box width="1230px" height="600px" display="flex" flexDirection="column" padding="15px" bgcolor="#f5f5f5">
       <Box
-        width="98%"
+        width="110%"
         height="80px"
         display="flex"
         alignItems="center"
         bgcolor="white"
-        borderRadius="8px"
+        borderRadius="2px"
         padding="0 10px"
         mb={0}
       >
         <TextField
           variant="outlined"
-          placeholder="Search by Item name, item code"
+          placeholder="Search by Item name"
           size="small"
+          value={searchTerm}
+          onChange={handleSearchChange}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -114,7 +128,7 @@ const ItemTable = () => {
             ),
           }}
           sx={{
-            width: '70%',
+            width: '45%',
             marginRight: 'auto',
             '& .MuiOutlinedInput-root': { borderRadius: '16px', borderColor: '#D9DBDD' },
           }}
@@ -127,7 +141,7 @@ const ItemTable = () => {
               IconComponent === Filtericons
                 ? handleFilterIconClick
                 : IconComponent === Sorticons
-                ? handleSortMenuClick  // Set the sort click handler
+                ? handleSortMenuClick  
                 : IconComponent === MoreVertIcon
                 ? handleFilterMenuClick
                 : undefined
@@ -160,7 +174,7 @@ const ItemTable = () => {
             horizontal: 'right',
           }}
         >
-          <SortByComponent />  {/* Render SortByComponent here */}
+          <SortByComponent /> 
         </Popover>
         <Popover
           open={Boolean(anchorElFilter)}
@@ -184,14 +198,15 @@ const ItemTable = () => {
           variant="contained"
           disableElevation
           sx={{ bgcolor: '#FFA726', color: 'white', borderRadius: '10px' }}
+          onClick={handleOpenPopup}
         >
           New Item
         </Button>
       </Box>
 
-      <TableContainer sx={{ maxHeight: 450, overflowY: 'auto','&::-webkit-scrollbar': { display: 'none' }, 
-    '-ms-overflow-style': 'none',              
-    scrollbarWidth: 'none',  }}>
+      <TableContainer sx={{ maxHeight: 450,width:'1372px', overflowY: 'auto','&::-webkit-scrollbar': { display: 'none' }, 
+     '-ms-overflow-style': 'none',              
+      scrollbarWidth: 'none', borderRadius:'2px'  }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -204,7 +219,7 @@ const ItemTable = () => {
                     fontWeight: 600,
                     color: '#4E585E',
                     paddingLeft: idx === 2 ? '10px' : '8px',
-                    paddingRight: idx === 3 ? '20px' : '4px', // Adjusted space
+                    paddingRight: idx === 3 ? '20px' : '4px',
                   }}
                 >
                   {heading}
@@ -247,17 +262,17 @@ const ItemTable = () => {
                     <MoreVertIcon />
                   </IconButton>
                   <Menu 
-  anchorEl={anchorElAction} 
-  open={Boolean(anchorElAction)} 
-  onClose={handleActionMenuClose}
-  sx={{ 
-    boxShadow: 'none',  // Remove box shadow
-    '& .MuiPaper-root': { boxShadow: 'none' }  // Ensure paper element also has no shadow
-  }}
->
-  <MenuItem onClick={handleActionMenuClose}>Edit</MenuItem>
-  <MenuItem onClick={handleActionMenuClose}>Inactive</MenuItem>
-</Menu>
+                   anchorEl={anchorElAction} 
+                     open={Boolean(anchorElAction)} 
+                     onClose={handleActionMenuClose}
+                     sx={{ 
+                         boxShadow: 'none',  
+                        '& .MuiPaper-root': { boxShadow: 'none' }  
+                       }}
+                  >
+                  <MenuItem onClick={handleActionMenuClose}>Edit</MenuItem>
+                  <MenuItem onClick={handleActionMenuClose}>Inactive</MenuItem>
+                 </Menu>
                 </TableCell>
               </TableRow>
             ))}
@@ -280,7 +295,7 @@ const ItemTable = () => {
             }}
             renderValue={(value) => `${value}/Page`}
           >
-            {Array.from({ length: 100 }, (_, i) => i + 1).map((option) => (
+            {Array.from({ length: 20 }, (_, i) => (i + 1)*5).map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
@@ -302,8 +317,8 @@ const ItemTable = () => {
         </Box>
       </Box>
 
-      {/* FilterModal Component */}
       {filterModalOpen && <FilterModal open={filterModalOpen} onClose={handleFilterModalClose} />}
+      <AddNewItemPopup open={isPopupOpen} onClose={handleClosePopup} />
     </Box>
   );
 };

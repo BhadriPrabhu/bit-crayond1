@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Typography, Select, MenuItem, Stack, IconButton, FormControl, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
-import DoneIcon from '@mui/icons-material/Done'; // Import DoneIcon for the tick mark
+import DoneIcon from '@mui/icons-material/Done';
 
 const FilterModal = ({ open, onClose }) => {
   const [selectedCategory, setSelectedCategory] = useState('Biscuits');
@@ -41,8 +41,8 @@ const FilterModal = ({ open, onClose }) => {
           Filters
         </Typography>
         
-        {/* Spacer to separate filters from dropdown */}
-        <Box sx={{ marginBottom: 1 }} /> {/* Reduced space */}
+        
+        <Box sx={{ marginBottom: 1 }} /> 
 
         <Stack spacing={2} flexGrow={1}>
           <FormControl fullWidth variant="outlined">
@@ -79,7 +79,7 @@ const FilterModal = ({ open, onClose }) => {
                   </Stack>
                 </MenuItem>
               ))}
-              <Divider sx={{ my: 1 }} /> {/* Divider between options and add new */}
+              <Divider sx={{ my: 1 }} /> 
               <MenuItem>
                 <Typography
                   sx={{ color: 'blue', cursor: 'pointer', width: '100%' }}
@@ -91,34 +91,33 @@ const FilterModal = ({ open, onClose }) => {
             </Select>
           </FormControl>
 
-          {/* Spacer to separate item status from buttons */}
-          <Box sx={{ marginBottom: 1 }} /> {/* Space before Item Status (reduced space) */}
+          <Box sx={{ marginBottom: 1 }} />
 
           <Box>
             <Typography variant="subtitle2" color="text.secondary">Item Status</Typography>
-            <Box sx={{ marginBottom: 2 }} /> {/* Space between Item Status and buttons */}
+            <Box sx={{ marginBottom: 2 }} /> 
             <Stack direction="row" spacing={2}>
               <Button
                 variant="contained"
                 sx={{
-                  bgcolor: '#FFA048', // Background color for Active button
-                  color: 'white', // Text color for Active button
+                  bgcolor: '#FFA048',
+                  color: 'white', 
                   '&:hover': {
-                    bgcolor: '#FF8C1A', // Darker shade on hover
+                    bgcolor: '#FF8C1A',
                   },
                 }}
-                startIcon={<DoneIcon />} // Add tick icon to Active button
+                startIcon={<DoneIcon />} 
               >
                 Active
               </Button>
               <Button
                 variant="outlined"
                 sx={{
-                  borderColor: '#D9DBDD', // Border color for Inactive button
-                  color: 'black', // Text color for Inactive button
+                  borderColor: '#D9DBDD', 
+                  color: 'black', 
                   '&:hover': {
-                    borderColor: '#B2B2B2', // Darker border color on hover
-                    color: '#333', // Darker text color on hover
+                    borderColor: '#B2B2B2', 
+                    color: '#333', 
                   },
                 }}
               >
@@ -127,8 +126,7 @@ const FilterModal = ({ open, onClose }) => {
             </Stack>
           </Box>
 
-          {/* Spacer to separate item status and buttons */}
-          <Box sx={{ marginBottom: 2 }} /> {/* Space before buttons */}
+          <Box sx={{ marginBottom: 2 }} /> 
         </Stack>
 
         <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
@@ -137,11 +135,11 @@ const FilterModal = ({ open, onClose }) => {
     fullWidth
     onClick={onClose}
     sx={{
-      borderColor: '#FFA048', // Border color for Reset button
-      color: '#FFA048', // Text color for Reset button
+      borderColor: '#FFA048', 
+      color: '#FFA048', 
       '&:hover': {
-        borderColor: '#FF8C1A', // Darker border color on hover
-        color: '#FF8C1A', // Darker text color on hover
+        borderColor: '#FF8C1A', 
+        color: '#FF8C1A', 
       },
     }}
   >

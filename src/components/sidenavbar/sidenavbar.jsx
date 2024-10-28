@@ -1,4 +1,3 @@
-// Sidebar.jsx
 import React from 'react'; 
 import { List, ListItemIcon, ListItemText } from '@mui/material';
 import Dashboard from '../../icons/dashboard';

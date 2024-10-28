@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge, IconButton, Avatar } from '@mui/material';
-import { StyledAppBar, StyledToolbar, Title, NotificationButton, StyledBadge, StyledAvatar, RightSection } from './topnavbar_styles'; // Import styles from styles.jsx
+import { StyledAppBar, StyledToolbar, Title, NotificationButton, StyledBadge, StyledAvatar, RightSection } from './topnavbar_styles';
 import Notifications1 from '../../icons/notification';
 import Profile from '../../../src/profile1.png';
 

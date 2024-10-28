@@ -18,10 +18,12 @@ export const Title = styled(Typography)(() => ({
   fontWeight: 600, 
   fontSize: '16.5px', 
   color: '#02111A', 
+  marginTop:'-15px'
 }));
 
 export const NotificationButton = styled(IconButton)(() => ({
   color: '#000000', 
+  marginTop:'-10px'
 }));
 
 
@@ -38,7 +40,7 @@ export const StyledBadge = styled(Badge)(() => ({
 }));
 
 export const StyledAvatar = styled(Avatar)(() => ({
-  marginTop: '-6px',
+  marginTop: '-15px',
 }));
 
 
