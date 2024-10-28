@@ -12,6 +12,8 @@ import Moreverticons1 from '../moreverticon/Moreverticon';
 import FilterModal from '../filtericon/filtericon';
 import SortByComponent from '../sorticon/sorticon';
 import AddNewItemPopup from '../newitem_button/Addnewpopup';
+import BulkImportModal from '../moreverticon/BulkimportModal';
+import BulkExportModal from '../moreverticon/BulkexportMore';
 
 const data = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
@@ -31,6 +33,9 @@ const ItemTable = () => {
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isBulkImportOpen, setIsBulkImportOpen] = useState(false);
+  const [isBulkExportOpen, setIsBulkExportOpen] = useState(false);
+
 
   const handleSearchChange = (event) => setSearchTerm(event.target.value);
 
@@ -54,6 +59,22 @@ const ItemTable = () => {
 
   const handleOpenPopup = () => setIsPopupOpen(true);
   const handleClosePopup = () => setIsPopupOpen(false);
+
+  const handleBulkImportClick = () => {
+    setIsBulkImportOpen(true);
+  };
+  
+  const handleCloseBulkImport = () => {
+    setIsBulkImportOpen(false);
+  };
+
+  const handleBulkExportClick = () => {
+    setIsBulkExportOpen(true);
+  };
+  
+  const handleCloseBulkExport = () => {
+    setIsBulkExportOpen(false);
+  };
 
   const filteredData = data.filter((row) =>
     row.itemName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -189,7 +210,9 @@ const ItemTable = () => {
             horizontal: 'right',
           }}
         >
-          <Moreverticons1 />
+          <Moreverticons1 
+          onBulkImportClick={handleBulkImportClick}
+          onBulkExportClick={handleBulkExportClick}/>
         </Popover>
 
         <Divider orientation="vertical" flexItem sx={{ height: 32, bgcolor: '#D9DBDD', mr: 2, marginTop: '22px' }} />
@@ -319,6 +342,13 @@ const ItemTable = () => {
 
       {filterModalOpen && <FilterModal open={filterModalOpen} onClose={handleFilterModalClose} />}
       <AddNewItemPopup open={isPopupOpen} onClose={handleClosePopup} />
+      {isBulkImportOpen && (
+     <BulkImportModal open={isBulkImportOpen} onClose={handleCloseBulkImport} />
+     
+)}
+{isBulkExportOpen && (
+  <BulkExportModal open={isBulkExportOpen} onClose={handleCloseBulkExport} />
+)}
     </Box>
   );
 };

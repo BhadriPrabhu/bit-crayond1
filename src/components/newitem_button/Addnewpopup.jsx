@@ -111,7 +111,7 @@ const AddNewItemPopup = ({ open, onClose }) => {
               overflowY: variants.length > 4 ? 'auto' : 'visible',
               mt: 2,
               pr: 2,
-              '&::-webkit-scrollbar': { display: 'none' },  // Hide the scrollbar
+              '&::-webkit-scrollbar': { display: 'none' }, 
             }}
           >
             {variants.map((variant, index) => (
