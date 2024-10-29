@@ -1,10 +1,10 @@
 import "./App.css";
-import Totalcard from "./Bhadri-card/Total-card"; 
+import CustomerViewIndex from "./screens/merchantCustomerView/customerViewIndex";
 
 function App() {
   return (
     <div className="el1">
-      <Totalcard/>
+      <CustomerViewIndex/>
     </div>  
 
 
