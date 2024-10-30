@@ -1,11 +1,12 @@
+import { Box } from "@mui/material";
 import "./App.css";
-import Totalcard from "./Bhadri-card/Total-card"; 
+import Screen1 from "./screens/Screen1";
 
 function App() {
   return (
-    <div className="el1">
-      <Totalcard/>
-    </div>  
+    <Box>
+      <Screen1/>
+    </Box>  
 
 
   )

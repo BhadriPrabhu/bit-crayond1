@@ -1,2 +1,1 @@
-export * from "./layout"
-export * from "./navbar"
+export {Tables} from './Customer/tables'
