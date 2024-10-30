@@ -16,7 +16,8 @@ function Moreverticons1({ onBulkImportClick, onBulkExportClick  }) {
         border: '1px solid #FFFFFF',
         paddingTop: '14px',
         paddingLeft: '15px',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;',
+        boxShadow:'none'
+
       }}
     >
       <Typography onClick={onBulkImportClick} sx={{ cursor: 'pointer' }}>

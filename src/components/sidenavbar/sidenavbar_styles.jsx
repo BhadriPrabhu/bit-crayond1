@@ -27,7 +27,7 @@ export const IconWrapper = styled('div')(({ theme }) => ({
 }));
 
 export const ListItemStyled = styled(ListItem)(() => ({
-  color: '#6A7175', // Default color for text
+  color: '#6A7175',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

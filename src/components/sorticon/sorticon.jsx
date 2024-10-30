@@ -1,54 +1,38 @@
 import React, { useState } from 'react';
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, FormControl } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { Box, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { sortItems } from '../../redux/slices/itemSlice';
 
 const SortByComponent = () => {
-  const [selectedValue, setSelectedValue] = useState('recentlyAdded');
+  const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState('asc');
 
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    const value = event.target.value;
+    setSelectedValue(value);
+    dispatch(sortItems(value)); 
   };
 
   return (
     <Box
       sx={{
-        width: '170px',
-        height:'160px',
-        padding: '16px',
+        width: '150px', 
+        height: '135px',
+        padding: '10px',
         bgcolor: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        fontFamily: 'Arial, sans-serif'
+        borderRadius: '6px',
+        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+        fontFamily: 'Arial, sans-serif',
       }}
     >
-      <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1, fontSize: '0.9rem' }}>
         Sort by
       </Typography>
-      <FormControl component="fieldset">
-        <RadioGroup
-          value={selectedValue}
-          onChange={handleChange}
-          name="sort-by-options"
-        >
-          <FormControlLabel
-            value="recentlyAdded"
-            control={<Radio sx={{ color: '#FFA048', '&.Mui-checked': { color: '#FFA048' } }} />}
-            label="Recently added"
-            sx={{ color: '#333' }}
-          />
-          <FormControlLabel
-            value="aToZ"
-            control={<Radio sx={{ color: '#D9DBDD', '&.Mui-checked': { color: '#FFA048' } }} />}
-            label="A-Z"
-            sx={{ color: '#333' }}
-          />
-          <FormControlLabel
-            value="zToA"
-            control={<Radio sx={{ color: '#D9DBDD', '&.Mui-checked': { color: '#FFA048' } }} />}
-            label="Z-A"
-            sx={{ color: '#333' }}
-          />
-        </RadioGroup>
-      </FormControl>
+      <RadioGroup value={selectedValue} onChange={handleChange}>
+        <FormControlLabel value="recent" control={<Radio size="small" />} label={<Typography variant="body2" fontSize="0.8rem">Recently added</Typography>} />
+        <FormControlLabel value="asc" control={<Radio size="small" />} label={<Typography variant="body2" fontSize="0.8rem">A-Z</Typography>} />
+        <FormControlLabel value="desc" control={<Radio size="small" />} label={<Typography variant="body2" fontSize="0.8rem">Z-A</Typography>} />
+      </RadioGroup>
     </Box>
   );
 };

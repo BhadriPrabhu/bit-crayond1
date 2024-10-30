@@ -97,32 +97,33 @@ const FilterModal = ({ open, onClose }) => {
             <Typography variant="subtitle2" color="text.secondary">Item Status</Typography>
             <Box sx={{ marginBottom: 2 }} /> 
             <Stack direction="row" spacing={2}>
-              <Button
-                variant="contained"
+              <Typography
                 sx={{
                   bgcolor: '#FFA048',
-                  color: 'white', 
-                  '&:hover': {
-                    bgcolor: '#FF8C1A',
-                  },
+                  color: 'white',
+                  fontWeight: '500',
+                  padding: '6px 12px',
+                  borderRadius: '5px',
+                  border: '1px solid transparent',
+                  display: 'inline-block',
+                  width: 'fit-content',
                 }}
-                startIcon={<DoneIcon />} 
               >
                 Active
-              </Button>
-              <Button
-                variant="outlined"
+              </Typography>
+              <Typography
                 sx={{
-                  borderColor: '#D9DBDD', 
-                  color: 'black', 
-                  '&:hover': {
-                    borderColor: '#B2B2B2', 
-                    color: '#333', 
-                  },
+                  color: 'black',
+                  fontWeight:'500',
+                  padding: '6px 12px',
+                  borderRadius: '5px',
+                  border: '1px solid #D9DBDD',
+                  display: 'inline-block',
+                  width: 'fit-content',
                 }}
               >
                 Inactive
-              </Button>
+              </Typography>
             </Stack>
           </Box>
 
@@ -130,21 +131,21 @@ const FilterModal = ({ open, onClose }) => {
         </Stack>
 
         <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
-        <Button
-    variant="outlined"
-    fullWidth
-    onClick={onClose}
-    sx={{
-      borderColor: '#FFA048', 
-      color: '#FFA048', 
-      '&:hover': {
-        borderColor: '#FF8C1A', 
-        color: '#FF8C1A', 
-      },
-    }}
-  >
-    Reset
-  </Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={onClose}
+            sx={{
+              borderColor: '#FFA048', 
+              color: '#FFA048', 
+              '&:hover': {
+                borderColor: '#FF8C1A', 
+                color: '#FF8C1A', 
+              },
+            }}
+          >
+            Reset
+          </Button>
           <Button variant="contained" fullWidth color="warning" onClick={onClose}>Apply Filter</Button>
         </Stack>
       </Box>

@@ -14,6 +14,11 @@ import SortByComponent from '../sorticon/sorticon';
 import AddNewItemPopup from '../newitem_button/Addnewpopup';
 import BulkImportModal from '../moreverticon/BulkimportModal';
 import BulkExportModal from '../moreverticon/BulkexportMore';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchTerm } from '../../redux/slices/itemSlice';
+import { setItems } from '../../redux/slices/itemSlice';
+
+
 
 const data = Array.from({ length: 100 }, (_, index) => ({
   id: index + 1,
@@ -25,19 +30,23 @@ const data = Array.from({ length: 100 }, (_, index) => ({
 }));
 
 const ItemTable = () => {
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.items.items);
+  const searchTerm = useSelector((state) => state.items.searchTerm);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [anchorElFilter, setAnchorElFilter] = useState(null);
   const [anchorElSort, setAnchorElSort] = useState(null); 
   const [anchorElAction, setAnchorElAction] = useState(null);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isBulkImportOpen, setIsBulkImportOpen] = useState(false);
   const [isBulkExportOpen, setIsBulkExportOpen] = useState(false);
 
-
-  const handleSearchChange = (event) => setSearchTerm(event.target.value);
+  const handleSearchChange = (event) => {
+    dispatch(setSearchTerm(event.target.value));
+  };
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
@@ -76,10 +85,10 @@ const ItemTable = () => {
     setIsBulkExportOpen(false);
   };
 
-  const filteredData = data.filter((row) =>
+  const filteredData = items.filter((row) =>
     row.itemName.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+  
   const totalRecords = filteredData.length;
   const startRecord = page * rowsPerPage + 1;
   const endRecord = Math.min(totalRecords, startRecord + rowsPerPage - 1);
@@ -149,9 +158,9 @@ const ItemTable = () => {
             ),
           }}
           sx={{
-            width: '45%',
+            width: '40%',
             marginRight: 'auto',
-            '& .MuiOutlinedInput-root': { borderRadius: '16px', borderColor: '#D9DBDD' },
+            '& .MuiOutlinedInput-root': { borderRadius: '8px', borderColor: '#D9DBDD' },
           }}
         />
 
@@ -176,6 +185,7 @@ const ItemTable = () => {
               borderWidth: 1,
               borderStyle: 'solid',
               borderRadius: '4px',
+              boxShadow: 'none',
               '&:hover': { borderColor: '#FFA048' },
             }}
           >
@@ -194,6 +204,13 @@ const ItemTable = () => {
             vertical: 'top',
             horizontal: 'right',
           }}
+          sx={{
+            boxShadow: 'none',
+            '& .MuiPaper-root': {
+              boxShadow: 'none !important', 
+              border: '1px solid #E0E0E0',
+            },
+          }}
         >
           <SortByComponent /> 
         </Popover>
@@ -208,6 +225,13 @@ const ItemTable = () => {
           transformOrigin={{
             vertical: 'top',
             horizontal: 'right',
+          }}
+          sx={{
+            boxShadow: 'none',
+            '& .MuiPaper-root': {
+              boxShadow: 'none !important',
+              border: '1px solid #E0E0E0', 
+            },
           }}
         >
           <Moreverticons1 
@@ -226,119 +250,151 @@ const ItemTable = () => {
           New Item
         </Button>
       </Box>
-
-      <TableContainer sx={{ maxHeight: 450,width:'1372px', overflowY: 'auto','&::-webkit-scrollbar': { display: 'none' }, 
-     '-ms-overflow-style': 'none',              
-      scrollbarWidth: 'none', borderRadius:'2px'  }}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {['Item Code', 'Item Name', 'Category', 'Status', 'Actions'].map((heading, idx) => (
-                <TableCell
-                  key={heading}
-                  align={idx >= 3 ? 'right' : 'left'}
-                  sx={{
-                    borderColor: '#F0F3F6',
-                    fontWeight: 600,
-                    color: '#4E585E',
-                    paddingLeft: idx === 2 ? '10px' : '8px',
-                    paddingRight: idx === 3 ? '20px' : '4px',
-                  }}
-                >
-                  {heading}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {visibleRows.map((row) => (
-              <TableRow key={row.id} sx={{ bgcolor: 'white', height: 40, borderBottom: '1px solid #E5E8EB' }}>
-                <TableCell sx={{ paddingLeft: '8px' }}>{row.itemCode}</TableCell>
-                <TableCell sx={{ paddingLeft: '8px' }}>
-                  {row.itemName}
-                  {row.itemSize && (
-                    <Typography
-                      variant="caption"
-                      display="block"
-                      sx={{ fontSize: '12px', color: '#4E585E', mt: '2px' }}
-                    >
-                      {row.itemSize}
-                    </Typography>
-                  )}
-                </TableCell>
-                <TableCell sx={{ paddingLeft: '16px' }}>{row.category}</TableCell>
-                <TableCell align="right" sx={{ paddingRight: '24px' }}>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{
-                      bgcolor: row.status === 'Active' ? '#CBF2E0' : '#FFDAD3',
-                      color: '#003D20',
-                      boxShadow: 'none',
-                    }}
-                  >
-                    {row.status}
-                  </Button>
-                </TableCell>
-                <TableCell align="right" sx={{ paddingRight: '8px' }}>
-                  <IconButton onClick={(e) => handleActionMenuClick(e)}>
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu 
-                   anchorEl={anchorElAction} 
-                     open={Boolean(anchorElAction)} 
-                     onClose={handleActionMenuClose}
-                     sx={{ 
-                         boxShadow: 'none',  
-                        '& .MuiPaper-root': { boxShadow: 'none' }  
-                       }}
-                  >
-                  <MenuItem onClick={handleActionMenuClose}>Edit</MenuItem>
-                  <MenuItem onClick={handleActionMenuClose}>Inactive</MenuItem>
-                 </Menu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <Box width="98%" mt="auto" display="flex" justifyContent="space-between" alignItems="center">
-        <Box display="flex" alignItems="center">
-          <Select
-            value={rowsPerPage}
-            onChange={handleChangeRowsPerPage}
-            size="small"
-            variant="outlined"
+      <TableContainer 
+  sx={{
+    maxHeight: 450,
+    width: '1372px',
+    overflowY: 'auto',
+    '&::-webkit-scrollbar': { display: 'none' },
+    '-ms-overflow-style': 'none',
+    scrollbarWidth: 'none',
+    borderRadius: '2px'
+  }}
+>
+  <Table stickyHeader>
+    <TableHead>
+      <TableRow>
+        {['Item Code', 'Item Name', 'Category', 'Status', 'Action'].map((heading, idx) => (
+          <TableCell
+            key={heading}
+            align={idx < 3 ? 'left' : 'right'}
             sx={{
-              mr: 2,
-              width: 120,
-              '& .MuiOutlinedInput-root': { borderRadius: '4px', borderColor: '#D9DBDD' },
-              '&:hover .MuiOutlinedInput-root': { borderColor: '#FFA048' }
+              bgcolor: '#F0F3F6',
+              fontWeight: 600,
+              color: '#4E585E',
+              paddingLeft: idx === 0 ? '30px' : '5px', 
+              paddingRight: idx === 4 ? '30px' : '5px', 
+              borderRight: idx === 2 ? '50px solid transparent' : 'none',
+              width: idx === 3 ? '90px' : 'auto',
             }}
-            renderValue={(value) => `${value}/Page`}
           >
-            {Array.from({ length: 20 }, (_, i) => (i + 1)*5).map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-          <Typography variant="body2" color="#666666" sx={{marginLeft:'20px'}}>
-            {`showing ${startRecord}-${endRecord} of ${totalRecords} records`}
-          </Typography>
-        </Box>
+            {heading}
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {visibleRows.map((row) => (
+        <TableRow key={row.id} sx={{ bgcolor: 'white', height: 40, borderBottom: '1px solid #E5E8EB' }}>
+          <TableCell align="left" sx={{ paddingLeft: '30px', paddingRight: '5px' }}>{row.itemCode}</TableCell> 
+          <TableCell align="left" sx={{ paddingLeft: '5px', paddingRight: '5px' }}>
+            {row.itemName}
+            {row.itemSize && (
+              <Typography
+                variant="caption"
+                display="block"
+                sx={{ fontSize: '12px', color: '#4E585E', mt: '2px' }}
+              >
+                {row.itemSize}
+              </Typography>
+            )}
+          </TableCell>
+          <TableCell align="left" sx={{ paddingLeft: '5px', paddingRight: '5px', borderRight: '50px solid transparent' }}>{row.category}</TableCell>
+          <TableCell align="right" sx={{ width: '90px', paddingRight: '10px' }}> 
+            <Typography
+              variant="body2"
+              sx={{
+                color: row.status === 'Active' ? '#003D20' : '#3D0600',
+                bgcolor: row.status === 'Active' ? '#CBF2E0' : '#FFDAD3',
+                borderRadius: '4px',
+                width: '70px', 
+                height: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: '20px', 
+              }}
+            >
+              {row.status}
+            </Typography>
+          </TableCell>
+          <TableCell align="right" sx={{ paddingLeft: '5px', paddingRight: '30px' }}> 
+            <IconButton onClick={(e) => handleActionMenuClick(e)}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu 
+              anchorEl={anchorElAction} 
+              open={Boolean(anchorElAction)} 
+              onClose={handleActionMenuClose}
+              sx={{ 
+                boxShadow: 'none',  
+                '& .MuiPaper-root': { boxShadow: 'none' }  
+              }}
+            >
+              <MenuItem onClick={handleActionMenuClose}>Edit</MenuItem>
+              <MenuItem onClick={handleActionMenuClose}>Inactive</MenuItem>
+            </Menu>
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
 
-        <Box display="flex" alignItems="center">
-          <Button onClick={() => setPage(page - 1)} disabled={page === 0}>
-            {'<'}
-          </Button>
-          {renderPaginationButtons()}
-          <Button onClick={() => setPage(page + 1)} disabled={page >= Math.ceil(totalRecords / rowsPerPage) - 1}>
-            {'>'}
-          </Button>
-        </Box>
-      </Box>
+<Box 
+  width="98%" 
+  mt="auto" 
+  display="flex" 
+  justifyContent="space-between" 
+  alignItems="center" 
+  sx={{ paddingLeft: '30px', paddingRight: '30px' }} 
+> 
+  <Box display="flex" alignItems="center">
+    <Select
+      value={rowsPerPage}
+      onChange={handleChangeRowsPerPage}
+      size="small"
+      variant="outlined"
+      sx={{
+        mr: 2,
+        width: 100,
+        height: 32,
+        fontSize:'0.85rem',
+        '& .MuiOutlinedInput-root': { borderRadius: '4px', borderColor: '#D9DBDD' },
+        '&:hover .MuiOutlinedInput-root': { borderColor: '#FFA048' }
+      }}
+      renderValue={(value) => `${value}/Page`}
+    >
+      {Array.from({ length: 5 }, (_, i) => (i + 1) * 5).map((option) => (
+        <MenuItem key={option} value={option}>
+          {option}
+        </MenuItem>
+      ))}
+    </Select>
+    <Typography variant="body2" color="#666666" sx={{ marginLeft: '20px' , fontSize:'13px'}}>
+      {`Showing ${startRecord}-${endRecord} of ${totalRecords} records`}
+    </Typography>
+  </Box>
+
+  <Box display="flex" alignItems="center" sx={{ marginRight: '-100px' }}> 
+    <Button 
+      onClick={() => setPage(page - 1)} 
+      disabled={page === 0} 
+      sx={{ minWidth: '32px' }}
+    >
+      {'<'}
+    </Button>
+    {renderPaginationButtons()}
+    <Button 
+      onClick={() => setPage(page + 1)} 
+      disabled={page >= Math.ceil(totalRecords / rowsPerPage) - 1} 
+      sx={{ minWidth: '32px' }}
+    >
+      {'>'}
+    </Button>
+  </Box>
+</Box>
+
 
       {filterModalOpen && <FilterModal open={filterModalOpen} onClose={handleFilterModalClose} />}
       <AddNewItemPopup open={isPopupOpen} onClose={handleClosePopup} />
