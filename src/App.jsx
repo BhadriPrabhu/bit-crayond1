@@ -1,13 +1,14 @@
+import { Box } from "@mui/material";
 import "./App.css";
-import Totalcard from "./Bhadri-card/Total-card"; 
-
+import Nav from './navigation/nav';
 function App() {
   return (
-    <div className="el1">
-      <Totalcard/>
-    </div>  
+  
+    <Box className="el1">
+      <Nav/>
+    </Box>  
 
 
-  )
+  );
 }
 export default App;
