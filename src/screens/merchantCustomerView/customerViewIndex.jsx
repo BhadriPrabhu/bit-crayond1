@@ -1,6 +1,5 @@
 import React from "react";
 import MerchantView from "../../components/customerView/merchantView";
-//import Trial1 from "../../components/customerView/trial1";
 import Customer from "../../assets/icons/customer";
 import Calender from "../../assets/icons/calender";
 import Phone from "../../assets/icons/phone";
@@ -150,7 +149,7 @@ export default function customerViewIndex() {
         amount="Enter amount to be added as credits"
         sar="SAR"
         equivalent="Equivalent to"
-        creditsnum="200 Credits"
+        creditsnum="Credits"
         remarks="Remarks"
         edittxt="Edit Information"
         save="Save"

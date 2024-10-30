@@ -5,6 +5,8 @@ import Customer from "../../assets/icons/customer";
 import Bell from "../../assets/icons/bell";
 import Boy from "../../assets/images/boy";
 import search from "../../assets/icons/search";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchTerm } from "../../redux/slices/searchSlice";
 import {
   AppBar,
   Box,
@@ -30,13 +32,16 @@ import {
   InputBase,
 } from "@mui/material";
 import ArrowIcon from "../../assets/icons/arrow";
+import DropdownArrow from "../../assets/icons/dropdownarrow";
 import Add from "../../assets/icons/add";
 import Pencil from "../../assets/icons/pencil";
 import Cancel from "../../assets/icons/cancel";
 import Info from "../../assets/icons/info";
-import FormGroup from "@mui/material/FormGroup";
+import TablePagination from "@mui/material/TablePagination";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import ArrowLeftIcon from "../../assets/icons/arrowlefticon";
+import ArrowRightIcon from "../../assets/icons/arrowrighticon";
 
 import { Select, MenuItem } from "@mui/material";
 import { Search } from "@mui/icons-material";
@@ -63,34 +68,61 @@ export default function MerchantView(props) {
   const [addOpen, setAddOpen] = React.useState(false);
   const [editOpen, setEditOpen] = React.useState(false);
   const [credits, setCredits] = React.useState("");
-  const [editValue, setEditValue] = React.useState("");
+  const [creditsNum, setCreditsNum] = React.useState("");
+  const [creditTxt, setCreditTxt] = React.useState("");
   const [selectedCountryCode, setSelectedCountryCode] = React.useState(
     phnum[0]?.label || ""
   );
-  const [mobileNumber, setMobileNumber] = React.useState("");
-  const [searchTerm, setSearchTerm] = React.useState("");
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const handleAddClickOpen = () => setAddOpen(true);
   const handleEditClickOpen = () => setEditOpen(true);
-  const handleCloseAdd = () => setAddOpen(false);
+  const handleCloseAdd = () => {
+    setAddOpen(false);
+    setCredits("");
+    setCreditsNum("");
+    setCreditTxt("");
+  };
   const handleCloseEdit = () => setEditOpen(false);
 
-  const handleAddCredits = () => {
-    console.log("Credits added:", credits);
-    setCredits("");
-    handleCloseAdd();
+  const dispatch = useDispatch();
+  const searchTerm = useSelector((state) => state.search.searchTerm);
+  const filteredOffers = offers.filter(
+    (item) =>
+      item.discounttxt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.discountname &&
+        item.discountname.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  const handleEditSubmit = () => {
-    console.log("Edited value:", editValue);
-    setEditValue("");
-    handleCloseEdit();
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
-  const filteredOffers = offers.filter((item) =>
-    item.discounttxt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())||
-    item.status.toLowerCase().includes(searchTerm.toLowerCase())||
-(item.discountname && item.discountname.toLowerCase().includes(searchTerm.toLowerCase()))    
+
+  const displayedOffers = filteredOffers.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
   );
+  const handleSearchChange = (e) => {
+    dispatch(setSearchTerm(e.target.value));
+  };
+  const handleCreditsChange = (event) => {
+    const value = event.target.value;
+    setCredits(value);
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      setCreditsNum(credits * 10);
+      setCreditTxt(" Credits");
+      event.preventDefault();
+    }
+  };
 
   return (
     <>
@@ -117,103 +149,154 @@ export default function MerchantView(props) {
             </Toolbar>
           </AppBar>
         </Box>
-        <Grid2 sx={styles.infogrid}>
-          <Box sx={styles.infobox}>
-            <Box sx={styles.basicrow}>
-              <Box sx={styles.basictxt}>{basicinfotxt}</Box>
-              <Box sx={styles.buttonGroup}>
-                <Button sx={styles.addbtn} onClick={handleAddClickOpen}>
-                  <Add /> {addcredits}
-                </Button>
-                <Button sx={styles.editbtn} onClick={handleEditClickOpen}>
-                  <Pencil /> {edit}
-                </Button>
+        <Box sx={styles.twocontainers}>
+          <Grid2 sx={styles.infogrid}>
+            <Box sx={styles.infobox}>
+              <Box sx={styles.basicrow}>
+                <Box sx={styles.basictxt}>{basicinfotxt}</Box>
+                <Box sx={styles.buttonGroup}>
+                  <Button sx={styles.addbtn} onClick={handleAddClickOpen}>
+                    <Add /> {addcredits}
+                  </Button>
+                  <Button sx={styles.editbtn} onClick={handleEditClickOpen}>
+                    <Pencil /> {edit}
+                  </Button>
+                </Box>
+              </Box>
+              <Box sx={styles.infomap}>
+                {info.map((item) => (
+                  <Box key={item.id} sx={styles.individualbox}>
+                    {item.id === 7 ? (
+                      <Box sx={styles.icon7box}>
+                        <item.icon />
+                      </Box>
+                    ) : (
+                      <Box sx={styles.iconbox}>
+                        <item.icon />
+                      </Box>
+                    )}
+                    <Box sx={styles.nameanddata}>
+                      <Box sx={styles.cusname}>{item.name}</Box>
+                      {item.id === 7 ? (
+                        <Box sx={{ ...styles.data, width: "500px" }}>
+                          {item.data}
+                        </Box>
+                      ) : (
+                        <Box sx={styles.data}>{item.data}</Box>
+                      )}
+                    </Box>
+                  </Box>
+                ))}
               </Box>
             </Box>
-            <Box sx={styles.infomap}>
-              {info.map((item) => (
-                <Box key={item.id} sx={styles.individualbox}>
-                  {item.id === 7 ? (
-                    <Box sx={styles.icon7box}>
-                      <item.icon />
+          </Grid2>
+          <Grid2 sx={styles.transactiongrid}>
+            <Box sx={styles.transactionhistorybox}>
+              <Box sx={styles.transactionhistorytxt}>{transaction}</Box>
+              <Box sx={styles.searchbox}>
+                <Paper component="form" sx={styles.searchbar}>
+                  <IconButton sx={{ p: "10px" }} aria-label="menu">
+                    <Search />
+                  </IconButton>
+                  <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Search by offer"
+                    inputProps={{ "aria-label": "Search by offer" }}
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                  />
+                </Paper>
+              </Box>
+              <Box sx={styles.scrollablecontent}>
+                {displayedOffers.length > 0 ? (
+                  displayedOffers.map((item) => (
+                    <Box sx={styles.individualboxtransaction}>
+                      <Box sx={styles.leftside}>
+                        <Box sx={styles.time}>{item.timeanddate}</Box>
+                        <Box sx={styles.discounttxtandname}>
+                          <Box sx={styles.discounttxt}>{item.discounttxt} </Box>
+                          <Box sx={styles.namecus}>{item.name}</Box>
+                        </Box>
+                        {item.id === 2 ? (
+                          <Box sx={styles.feedback}>{item.feedback}</Box>
+                        ) : (
+                          <Box sx={styles.discountname}>
+                            {item.discountname}
+                          </Box>
+                        )}
+                      </Box>
+                      <Box sx={styles.rightside}>
+                        {item.id === 2 || item.id === 5 ? (
+                          <Box sx={styles.creditsandstatus}>
+                            <Box sx={styles.creditsandsar}>
+                              <Box sx={styles.creditstxt}>{item.credits}</Box>
+                              <Typography sx={styles.sar}>
+                                {item.SAR}
+                              </Typography>
+                            </Box>
+                            <Box sx={styles.notredeemed}>{item.status}</Box>
+                          </Box>
+                        ) : (
+                          <Box sx={styles.redeemed}>{item.status}</Box>
+                        )}
+                      </Box>
                     </Box>
-                  ) : (
-                    <Box sx={styles.iconbox}>
-                      <item.icon />
+                  ))
+                ) : (
+                  <Box sx={styles.noResults}>No results found</Box>
+                )}
+                <TablePagination
+                  count={filteredOffers.length}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  rowsPerPage={rowsPerPage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  rowsPerPageOptions={[5, 10, 15]}
+                  labelRowsPerPage={""}
+                  labelDisplayedRows={({ from, to, count }) => (
+                    <span style={styles.show}>
+                      showing {from}-{to} of{" "}
+                      {count !== -1 ? count : `more than ${to}`} records
+                    </span>
+                  )}
+                  SelectProps={{
+                    renderValue: (selected) => (
+                      <Box sx={styles.rowperpage}>
+                        {selected} / page
+                        <DropdownArrow/>
+                      </Box>
+                    ),
+                    IconComponent: () => null, // Removes the default dropdown arrow
+                  }} 
+                 
+                  ActionsComponent={({
+                    count,
+                    page,
+                    rowsPerPage,
+                    onPageChange,
+                  }) => (
+                    <Box sx={styles.arrownav}>
+                      <IconButton
+                        onClick={() => onPageChange(null, page - 1)}
+                        disabled={page === 0}
+                        sx={{ marginLeft: "480px" }}
+                      >
+                        <ArrowLeftIcon />
+                      </IconButton>
+                      <Box sx={styles.pagenumbox}>{page + 1}</Box>
+                      <IconButton
+                        onClick={() => onPageChange(null, page + 1)}
+                        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                      >
+                        <ArrowRightIcon />
+                      </IconButton>
                     </Box>
                   )}
-                  <Box sx={styles.nameanddata}>
-                    <Box sx={styles.cusname}>{item.name}</Box>
-                    {item.id === 7 ? (
-                      <Box sx={{ ...styles.data, width: "500px" }}>
-                        {item.data}
-                      </Box>
-                    ) : (
-                      <Box sx={styles.data}>{item.data}</Box>
-                    )}
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        </Grid2>
-        <Grid2 sx={styles.transactiongrid}>
-          <Box sx={styles.transactionhistorybox}>
-            <Box sx={styles.transactionhistorytxt}>{transaction}</Box>
-            <Box sx={styles.searchbox}>
-              <Paper component="form" sx={styles.searchbar}>
-                <IconButton sx={{ p: "10px" }} aria-label="menu">
-                  <Search />
-                </IconButton>
-                <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Search by offer"
-                  inputProps={{ "aria-label": "Search by offer" }}
-                  value={searchTerm} // Bind search input value
-                  onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
                 />
-              </Paper>
+              </Box>
             </Box>
-            <Box sx={styles.scrollablecontent}>
-              {filteredOffers.length>0?(filteredOffers.map((item) => (
-                <Box sx={styles.individualboxtransaction}>
-                  <Box sx={styles.leftside}>
-                    <Box sx={styles.time}>{item.timeanddate}</Box>
-                    <Box sx={styles.discounttxtandname}>
-                      <Box sx={styles.discounttxt}>{item.discounttxt} </Box>
-                      <Box sx={styles.namecus}>{item.name}</Box>
-                    </Box>
-                    {item.id === 2 ? (
-                      <Box sx={styles.feedback}>{item.feedback}</Box>
-                    ) : (
-                      <Box sx={styles.discountname}>{item.discountname}</Box>
-                    )}
-                  </Box>
-                  <Box sx={styles.rightside}>
-                    {item.id === 2 || item.id === 5 ? (
-                      <Box sx={styles.creditsandstatus}>
-                        <Box sx={styles.creditsandsar}> 
-                          <Box sx={styles.creditstxt}>{item.credits}</Box>
-                          <Typography sx={styles.sar}>{item.SAR}</Typography>
-                        </Box>
-                        <Box sx={styles.notredeemed}>{item.status}</Box>
-                      </Box>
-                    ) : (
-                      <Box
-                        sx={styles.redeemed}
-                      >
-                        {item.status}
-                      </Box>
-                    )}
-                  </Box>
-                </Box>
-                ))
-              ) : (
-                <Box sx={styles.noResults}>No results found</Box>
-              )}
-            </Box>
-          </Box>
-        </Grid2>
+          </Grid2>
+        </Box>
       </Grid2>
       <Dialog open={addOpen} onClose={handleCloseAdd} sx={styles.adddialogbox}>
         <Box sx={styles.headerofcreditsbox}>
@@ -242,6 +325,9 @@ export default function MerchantView(props) {
             </InputLabel>
             <FilledInput
               id="filled-adornment-amount"
+              value={credits} // Use credits state for input value
+              onChange={handleCreditsChange}
+              onKeyDown={handleKeyPress}
               endAdornment={
                 <InputAdornment position="end" sx={styles.sartxt}>
                   {sar}
@@ -256,7 +342,10 @@ export default function MerchantView(props) {
               </Box>
               <Box sx={styles.equivalent}>{equivalent}</Box>
             </Box>
-            <Box sx={styles.creditsnum}>{creditsnum}</Box>
+            <Box sx={styles.creditsnum}>
+              {creditsNum}
+              {creditTxt}
+            </Box>
           </Box>
           <FormControl fullWidth sx={styles.remarkbox} variant="filled">
             <InputLabel htmlFor="filled-adornment-amount">{remarks}</InputLabel>

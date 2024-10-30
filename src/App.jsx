@@ -1,13 +1,14 @@
+import { Box } from "@mui/material";
 import "./App.css";
-import CustomerViewIndex from "./screens/merchantCustomerView/customerViewIndex";
-
+import Nav from './navigation/nav';
 function App() {
   return (
-    <div className="el1">
-      <CustomerViewIndex/>
-    </div>  
+  
+    <Box className="el1">
+      <Nav/>
+    </Box>  
 
 
-  )
+  );
 }
 export default App;

@@ -1,34 +1,26 @@
-import {
-  border,
-  borderBottom,
-  borderLeft,
-  borderRadius,
-  borderRight,
-  borderTop,
-  color,
-  display,
-  fontSize,
-  fontWeight,
-  height,
-  margin,
-  padding,
-  positions,
-  textAlign,
-  textTransform,
-  width,
-} from "@mui/system";
-import search from "../../assets/icons/search";
+import { margin } from "@mui/system";
 
 const styles = {
   wholescreen: {
     display: "flex",
     flexDirection: "column",
-    overflow: "hidden", // Hide overflow for the entire screen
-    height: "100vh", 
+    height: '100vh', // Ensure full viewport height
+    width: '100vw', // Ensure full viewport width
+    overflowY: 'auto', // Enable vertical scrolling
+    overflowX: 'hidden', // Prevent horizontal scrolling
+    position: 'relative', // Add position relative for absolute children if necessary
+    '&::-webkit-scrollbar': {
+      display: 'none', // For Chrome, Safari, and Opera
+    },
+    scrollbarWidth: 'none', // For Firefox
   },
   header: {
-    flexGrow: 1,
+    position:'fixed',
+    top: 0,
+    width:'94%',
+    flexGrow: 0,
     marginLeft: "96px",
+    zIndex: 1000,
   },
   appbar: {
     backgroundColor: "rgba(255, 255, 255, 1)",
@@ -48,6 +40,17 @@ const styles = {
     height: "40px",
     marginTop: "10px",
   },
+  twocontainers:{
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    overflowY: 'scroll',
+    scrollbarWidth: 'none', // For Firefox
+    '&::-webkit-scrollbar': {
+      display: 'none', // For Chrome, Safari, and Opera
+    },
+    marginTop: '80px',
+  },
   infobox: {
     backgroundColor: "rgba(255, 255, 255, 1)",
     display: "flex",
@@ -58,13 +61,16 @@ const styles = {
     //overflow: "hidden",
     borderRadius: "8px",
     overflowY: "auto",
+    
   },
   infogrid: {
-    position:'fixed',
+    flex:1,
+    position:'absolute',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "85px",
+   
+   
   },
   basicrow: {
     display: "flex",
@@ -119,7 +125,7 @@ const styles = {
   individualbox: {
     display: "flex",
     flexDirection: "row",
-    width: "32%", // Each item takes up roughly one-third of the width
+    width: "32%",
     alignItems: "center",
     padding: "8px",
     boxSizing: "border-box",
@@ -174,28 +180,27 @@ const styles = {
   },
   cancelbtn: {
     marginRight: "10px",
-    backgroundColor: "transparent", // Set default background color
+    backgroundColor: "transparent", 
     "&:hover": {
-      backgroundColor: "transparent", // Prevent hover background color change
+      backgroundColor: "transparent",
     },
     "&:active": {
-      backgroundColor: "transparent", // Prevent active background color change
-      boxShadow: "none", // Remove any box-shadow on active state
+      backgroundColor: "transparent", 
+      boxShadow: "none",
     },
     "&:focus": {
-      backgroundColor: "transparent", // Prevent focus background color change
-      outline: "none", // Remove the default outline
-      boxShadow: "none", // Remove the focus shadow if any
+      backgroundColor: "transparent",
+      outline: "none",
+      boxShadow: "none", 
     },
-    // Additional rule to override default button styles
     "&.MuiButton-root": {
-      boxShadow: "none", // Prevent box-shadow for the button
+      boxShadow: "none",
     },
   },
   customerprofilecredits: {
     display: "flex",
     flexDirection: "row",
-    // border:'1px solid',
+    
     height: "50px",
     padding: "10px",
     marginTop: "-12px",
@@ -293,8 +298,9 @@ const styles = {
   creditsnum:{
     color:'rgba(2, 17, 26, 1)',
     fontSize:'16px',
-    fontWeight:500,
-    marginTop:'5px'
+    fontWeight:600,
+    marginTop:'5px',
+    
   },
   remarkbox:{
      m: 1,
@@ -332,13 +338,16 @@ const styles = {
     addcreditsbtn:{
       color:'rgba(255, 255, 255, 1)',
       textTransform:'capitalize',
-      width:'100%'
+      width:'100%',
+      paddingBottom:'10px',
+      paddingTop:'10px'
     },
     addcreditsbox:{
       backgroundColor:'rgba(255, 160, 72, 1)',
       width:'100%',
       textAlign:'center',
-      borderRadius:'8px'
+      borderRadius:'8px',
+      //paddingTop:'8px'
      
     },
     editpopup:{
@@ -371,6 +380,9 @@ const styles = {
         marginTop: '8px',
         color: "rgba(78, 88, 94, 1)", 
       },
+      "& .MuiInputLabel-root.Mui-focused": {
+    color: "rgba(78, 88, 94, 1)", // Prevent color change on focus
+  },
      
       "& .MuiInputBase-input": {
         marginLeft: '15px',
@@ -386,6 +398,9 @@ const styles = {
     "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
       borderBottom: "none", // Removes the hover effect line
     },
+    "& .Mui-focused": {
+  color: "rgba(78, 88, 94, 1)", 
+},
     },
     
     mobnumbox:{
@@ -443,25 +458,34 @@ const styles = {
             },
         },
 
-    //transactiongrid
-    transactiongrid:{
+    transactiongrid: {
+      flex:1,
+      position: 'absolute',
+      bottom: 0, 
+      left: 0,
+      right: 0, 
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      overflowY: 'auto', 
+      bottom:'-140px'
       
-
+    
     },
     transactionhistorybox:{
+    
       backgroundColor: "rgba(255, 255, 255, 1)",
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
       justifyContent: "space-between",
       width: "60%",
-      overflow: "hidden",
-      borderRadius: "8px",
-      
+      height:"100%",
+      borderRadius: "8px 8px 0 0",
+     
+     
 
+      
     },
     transactionhistorytxt:{
          marginLeft:'20px',
@@ -482,7 +506,7 @@ const styles = {
       boxShadow:'none'
     },
     scrollablecontent: {
-      height: "220px", 
+      height: "360px", 
       overflowY: "auto",
       overflowX: "hidden",
       width:'100%',
@@ -491,7 +515,8 @@ const styles = {
       display: "none", 
     },
     scrollbarWidth: "none",
-      marginLeft:'2px'
+      marginLeft:'2px',
+      marginTop:'10px'
     },
     individualboxtransaction:{
       display:'flex',
@@ -562,8 +587,8 @@ const styles = {
       marginRight:'20px',
       paddingLeft:'7px',
       paddingRight:'7px',
-      paddingTop:'1px',
-      paddingBottom:'1px',
+      paddingTop:'4px',
+      paddingBottom:'4px',
     },
     creditsandstatus:{
       display:'flex',
@@ -579,10 +604,11 @@ const styles = {
       fontSize:'16px',
       fontWeight:600,
     },
-    sar:{
+    sartxt:{
       color:'rgba(78, 88, 94, 1)',
-      fontSize:'14px',
+      fontSize:'1px',
       fontWeight:500,
+      marginTop:'15px'
     },
     notredeemed:{
       width: "fit-content",
@@ -598,7 +624,35 @@ const styles = {
       
     },
   
-   
+   pagenumbox:{
+    width: "20px",
+    border: "1px solid rgba(255, 160, 72, 1)",
+    height: "20px",
+    marginTop: "5px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "rgba(255, 160, 72, 1)",
+  },
+  arrownav:{
+    
+      display: "flex",
+      justifyContent: "space-between",
+      ml: 2,
+    
+  },
+  rowperpage:{ 
+    display: 'flex', 
+    alignItems: 'center', 
+    border: '1px solid rgba(217, 219, 221, 1)', 
+    borderRadius: '4px', 
+    padding: '2px 5px',
+    marginLeft:'-8px' 
+  },
+  show:{
+     color: "rgba(78, 88, 94, 1)",
+     marginLeft:'-25px'
+  }
     
 };
 

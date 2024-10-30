@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import merchantReducer from "./merchantSlice"; // Update path as needed
+import { configureStore } from '@reduxjs/toolkit';
+import searchReducer from '../redux/slices/searchSlice';
 
 const store = configureStore({
   reducer: {
-    merchant: merchantReducer,
+    search: searchReducer,
   },
 });
 
