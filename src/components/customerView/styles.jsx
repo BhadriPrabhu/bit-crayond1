@@ -657,7 +657,8 @@ const styles = {
      marginLeft:'-25px'
   },
   divider:{
-    width:'96%'
+    width:'96%',
+    //divider
   }
     
 };
