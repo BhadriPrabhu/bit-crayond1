@@ -210,6 +210,7 @@ export default function MerchantView(props) {
               <Box sx={styles.scrollablecontent}>
                 {displayedOffers.length > 0 ? (
                   displayedOffers.map((item) => (
+                    <>
                     <Box sx={styles.individualboxtransaction}>
                       <Box sx={styles.leftside}>
                         <Box sx={styles.time}>{item.timeanddate}</Box>
@@ -217,7 +218,7 @@ export default function MerchantView(props) {
                           <Box sx={styles.discounttxt}>{item.discounttxt} </Box>
                           <Box sx={styles.namecus}>{item.name}</Box>
                         </Box>
-                        {item.id === 2 ? (
+                        {item.status === 'Added manually' ? (
                           <Box sx={styles.feedback}>{item.feedback}</Box>
                         ) : (
                           <Box sx={styles.discountname}>
@@ -225,8 +226,9 @@ export default function MerchantView(props) {
                           </Box>
                         )}
                       </Box>
+                      
                       <Box sx={styles.rightside}>
-                        {item.id === 2 || item.id === 5 ? (
+                        {item.status === 'Added manually' || item.status === 'Earned' ? (
                           <Box sx={styles.creditsandstatus}>
                             <Box sx={styles.creditsandsar}>
                               <Box sx={styles.creditstxt}>{item.credits}</Box>
@@ -241,11 +243,14 @@ export default function MerchantView(props) {
                         )}
                       </Box>
                     </Box>
+                    <Divider sx={styles.divider}/>
+                    </>
                   ))
                 ) : (
                   <Box sx={styles.noResults}>No results found</Box>
-                )}
-                <TablePagination
+                ) }
+
+                <TablePagination sx={styles.TablePagination}
                   count={filteredOffers.length}
                   page={page}
                   onPageChange={handleChangePage}
@@ -266,7 +271,7 @@ export default function MerchantView(props) {
                         <DropdownArrow/>
                       </Box>
                     ),
-                    IconComponent: () => null, // Removes the default dropdown arrow
+                    IconComponent: () => null, 
                   }} 
                  
                   ActionsComponent={({
@@ -293,6 +298,7 @@ export default function MerchantView(props) {
                     </Box>
                   )}
                 />
+                
               </Box>
             </Box>
           </Grid2>

@@ -111,6 +111,47 @@ export default function customerViewIndex() {
       discountname:"1COFFEEFOR5COFFEE",
       status:"Redeemed",
     },
+    {
+      id:7,
+      timeanddate:"10:45 AM, 25-09-2023",
+      discounttxt:"Loyalty credits",
+      feedback:"Customer got a damaged item which cannot be returned",
+      name:"• Sam",
+      credits:"1800 Credits",
+      SAR:"(SAR 800.00)",
+      status:"Added manually",
+
+    },
+    {
+      id:8,
+      timeanddate:"10:45 AM, 25-09-2023",
+      discounttxt:"10 Creadits for every SAR 100",
+      name:"• Sam",
+      discountname:"10CFOR100SPENT",
+      credits:"10 Credits",
+      SAR:"(SAR 100.00)",
+      status:"Earned",
+
+    },
+    {
+      id:9,
+      timeanddate:"10:45 AM, 25-09-2023",
+      discounttxt:"Get discount of SAR 50 for every SAR 10,000 spent",
+      name:" • Cashier name",
+      discountname:"SPEND&EARN",
+      status:"Redeemed",
+
+    },
+    {
+      id:10,
+      timeanddate:"10:45 AM, 25-09-2023",
+      discounttxt:"Get discount of SAR 50 for every SAR 10,000 spent",
+      name:" • Cashier name",
+      discountname:"SPEND&EARN",
+      status:"Redeemed",
+
+    },
+   
   ];
   const phnum = [
 

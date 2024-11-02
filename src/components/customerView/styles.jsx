@@ -1,18 +1,18 @@
+import { TablePagination } from "@mui/material";
 import { margin } from "@mui/system";
 
 const styles = {
   wholescreen: {
     display: "flex",
     flexDirection: "column",
-    height: '100vh', // Ensure full viewport height
-    width: '100vw', // Ensure full viewport width
-    overflowY: 'auto', // Enable vertical scrolling
-    overflowX: 'hidden', // Prevent horizontal scrolling
-    position: 'relative', // Add position relative for absolute children if necessary
+    height: '100vh', 
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    position: 'relative',
     '&::-webkit-scrollbar': {
-      display: 'none', // For Chrome, Safari, and Opera
+      display: 'none', 
     },
-    scrollbarWidth: 'none', // For Firefox
+    scrollbarWidth: 'none', 
   },
   header: {
     position:'fixed',
@@ -512,8 +512,8 @@ const styles = {
       width:'100%',
       paddingLeft:'10px',
     "&::-webkit-scrollbar": {
-      display: "none", 
-    },
+       display: "none", 
+     },
     scrollbarWidth: "none",
       marginLeft:'2px',
       marginTop:'10px'
@@ -524,7 +524,7 @@ const styles = {
       alignItems:'center',
       justifyContent:'space-between',
       paddingBottom:'10px',
-      borderBottom:'1px solid rgba(229, 232, 235, 1)'
+      
     },
     leftside:{
       display:'flex',
@@ -623,6 +623,9 @@ const styles = {
       marginRight:'20px'
       
     },
+  TablePagination:{
+    borderBottom:'none',
+  },
   
    pagenumbox:{
     width: "20px",
@@ -652,6 +655,9 @@ const styles = {
   show:{
      color: "rgba(78, 88, 94, 1)",
      marginLeft:'-25px'
+  },
+  divider:{
+    width:'96%'
   }
     
 };
