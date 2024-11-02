@@ -195,11 +195,11 @@ export default function MerchantView(props) {
               <Box sx={styles.transactionhistorytxt}>{transaction}</Box>
               <Box sx={styles.searchbox}>
                 <Paper component="form" sx={styles.searchbar}>
-                  <IconButton sx={{ p: "10px" }} aria-label="menu">
+                  <IconButton sx={styles.searchicon} aria-label="menu">
                     <Search />
                   </IconButton>
                   <InputBase
-                    sx={{ ml: 1, flex: 1 }}
+                    sx={styles.inputsearch}
                     placeholder="Search by offer"
                     inputProps={{ "aria-label": "Search by offer" }}
                     value={searchTerm}
