@@ -496,6 +496,13 @@ const styles = {
       marginTop:'20px',
       width:'95%'
     },
+    searchicon:{
+       p: "10px" 
+    },
+    inputsearch:{ 
+      ml: 1, 
+      flex: 1 
+    },
     searchbar:{
       p: "2px 4px",
       display: "flex",
