@@ -7,10 +7,11 @@ import Screen1 from "./screens/itemManagement_screen/screen1";
 import Moreverticon from "./components/moreverticon/Moreverticon";
 import FilterModal from "./components/filtericon/filtericon";
 import SortByComponent from "./components/sorticon/sorticon";
+import { Box } from "@mui/material";
 
 function App() {
   return (
-    <div className="el1">
+    <Box className="el1">
       {/* <Sidebar/> */}
       {/* <TopNavbar/> */}
       <Screen1/>
@@ -20,7 +21,7 @@ function App() {
       {/* <Simple/> */}
       {/* <SortByComponent/> */}
       {/* <Sample/> */}
-    </div>  
+    </Box>  
 
 
   )

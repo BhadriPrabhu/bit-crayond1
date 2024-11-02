@@ -17,6 +17,7 @@ import BulkExportModal from '../moreverticon/BulkexportMore';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchTerm } from '../../redux/slices/itemSlice';
 import { setItems } from '../../redux/slices/itemSlice';
+import styles from './styles_maincontent'
 
 
 
@@ -114,17 +115,7 @@ const ItemTable = () => {
       <Button
         key={idx}
         onClick={() => typeof pageIndex === 'number' && setPage(pageIndex)}
-        sx={{
-          minWidth: 32,
-          height: 32,
-          mx: 0.5,
-          color: page === pageIndex ? '#1363DF' : 'inherit',
-          borderColor: page === pageIndex ? '#1363DF' : 'transparent',
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderRadius: '4px',
-          '&:hover': { borderColor: '#1363DF' },
-        }}
+        sx={styles.paginationButton(page === pageIndex)}
         disabled={pageIndex === '...'}
       >
         {pageIndex === '...' ? '...' : pageIndex + 1}
@@ -133,16 +124,9 @@ const ItemTable = () => {
   };
 
   return (
-    <Box width="1230px" height="600px" display="flex" flexDirection="column" padding="15px" bgcolor="#f5f5f5">
+    <Box sx={styles.container}>
       <Box
-        width="110%"
-        height="80px"
-        display="flex"
-        alignItems="center"
-        bgcolor="white"
-        borderRadius="2px"
-        padding="0 10px"
-        mb={0}
+        sx={styles.header}
       >
         <TextField
           variant="outlined"
@@ -157,11 +141,7 @@ const ItemTable = () => {
               </InputAdornment>
             ),
           }}
-          sx={{
-            width: '40%',
-            marginRight: 'auto',
-            '& .MuiOutlinedInput-root': { borderRadius: '8px', borderColor: '#D9DBDD' },
-          }}
+          sx={styles.searchInput}
         />
 
         {[Sorticons, Filtericons, MoreVertIcon].map((IconComponent, index) => (
@@ -177,17 +157,7 @@ const ItemTable = () => {
                 : undefined
             }
             disableRipple
-            sx={{
-              width: 40,
-              height: 40,
-              marginRight: 2,
-              borderColor: '#D9DBDD',
-              borderWidth: 1,
-              borderStyle: 'solid',
-              borderRadius: '4px',
-              boxShadow: 'none',
-              '&:hover': { borderColor: '#FFA048' },
-            }}
+            sx={styles.iconButton}
           >
             <IconComponent />
           </IconButton>
@@ -204,13 +174,7 @@ const ItemTable = () => {
             vertical: 'top',
             horizontal: 'right',
           }}
-          sx={{
-            boxShadow: 'none',
-            '& .MuiPaper-root': {
-              boxShadow: 'none !important', 
-              border: '1px solid #E0E0E0',
-            },
-          }}
+          sx={styles.popover}
         >
           <SortByComponent /> 
         </Popover>
@@ -239,27 +203,19 @@ const ItemTable = () => {
           onBulkExportClick={handleBulkExportClick}/>
         </Popover>
 
-        <Divider orientation="vertical" flexItem sx={{ height: 32, bgcolor: '#D9DBDD', mr: 2, marginTop: '22px' }} />
+        <Divider sx={styles.divider} />
 
         <Button
           variant="contained"
           disableElevation
-          sx={{ bgcolor: '#FFA726', color: 'white', borderRadius: '10px' }}
+          sx={styles.newItemButton}
           onClick={handleOpenPopup}
         >
           New Item
         </Button>
       </Box>
       <TableContainer 
-  sx={{
-    maxHeight: 450,
-    width: '1372px',
-    overflowY: 'auto',
-    '&::-webkit-scrollbar': { display: 'none' },
-    '-ms-overflow-style': 'none',
-    scrollbarWidth: 'none',
-    borderRadius: '2px'
-  }}
+  sx={styles.tableContainer}
 >
   <Table stickyHeader>
     <TableHead>
@@ -268,15 +224,7 @@ const ItemTable = () => {
           <TableCell
             key={heading}
             align={idx < 3 ? 'left' : 'right'}
-            sx={{
-              bgcolor: '#F0F3F6',
-              fontWeight: 600,
-              color: '#4E585E',
-              paddingLeft: idx === 0 ? '30px' : '5px', 
-              paddingRight: idx === 4 ? '30px' : '5px', 
-              borderRight: idx === 2 ? '50px solid transparent' : 'none',
-              width: idx === 3 ? '90px' : 'auto',
-            }}
+            sx={styles.tableCell(idx)}
           >
             {heading}
           </TableCell>
@@ -303,22 +251,12 @@ const ItemTable = () => {
           <TableCell align="right" sx={{ width: '90px', paddingRight: '10px' }}> 
             <Typography
               variant="body2"
-              sx={{
-                color: row.status === 'Active' ? '#003D20' : '#3D0600',
-                bgcolor: row.status === 'Active' ? '#CBF2E0' : '#FFDAD3',
-                borderRadius: '4px',
-                width: '70px', 
-                height: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginLeft: '20px', 
-              }}
+              sx={styles.statusTypography(row)}
             >
               {row.status}
             </Typography>
           </TableCell>
-          <TableCell align="right" sx={{ paddingLeft: '5px', paddingRight: '30px' }}> 
+          <TableCell align="right" sx={styles.actionIconButton}> 
             <IconButton onClick={(e) => handleActionMenuClick(e)}>
               <MoreVertIcon />
             </IconButton>
@@ -342,12 +280,7 @@ const ItemTable = () => {
 </TableContainer>
 
 <Box 
-  width="98%" 
-  mt="auto" 
-  display="flex" 
-  justifyContent="space-between" 
-  alignItems="center" 
-  sx={{ paddingLeft: '30px', paddingRight: '30px' }} 
+  sx={styles.paginationContainer}
 > 
   <Box display="flex" alignItems="center">
     <Select
@@ -355,14 +288,7 @@ const ItemTable = () => {
       onChange={handleChangeRowsPerPage}
       size="small"
       variant="outlined"
-      sx={{
-        mr: 2,
-        width: 100,
-        height: 32,
-        fontSize:'0.85rem',
-        '& .MuiOutlinedInput-root': { borderRadius: '4px', borderColor: '#D9DBDD' },
-        '&:hover .MuiOutlinedInput-root': { borderColor: '#FFA048' }
-      }}
+      sx={styles.selectInput}
       renderValue={(value) => `${value}/Page`}
     >
       {Array.from({ length: 5 }, (_, i) => (i + 1) * 5).map((option) => (
@@ -376,7 +302,7 @@ const ItemTable = () => {
     </Typography>
   </Box>
 
-  <Box display="flex" alignItems="center" sx={{ marginRight: '-100px' }}> 
+  <Box sx={styles.paginationButtonsContainer}> 
     <Button 
       onClick={() => setPage(page - 1)} 
       disabled={page === 0} 

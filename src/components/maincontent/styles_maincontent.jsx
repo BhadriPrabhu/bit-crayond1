@@ -1,0 +1,142 @@
+
+
+const styles = {
+    container: {
+      width: "1230px",
+      height: "600px",
+      display: "flex",
+      flexDirection: "column",
+      padding: "15px",
+      backgroundColor: "#f5f5f5",
+    },
+    header: {
+      width: "110%",
+      height: "80px",
+      display: "flex",
+      alignItems: "center",
+      backgroundColor: "white",
+      borderRadius: "2px",
+      padding: "0 10px",
+      marginBottom: 0,
+    },
+    searchInput: {
+      width: "40%",
+      marginRight: "auto",
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "8px",
+        borderColor: "#D9DBDD",
+      },
+    },
+    iconButton: {
+      width: 40,
+      height: 40,
+      marginRight: 2,
+      borderColor: "#D9DBDD",
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderRadius: "4px",
+      boxShadow: "none",
+      "&:hover": { borderColor: "#FFA048" },
+    },
+    popover: {
+      boxShadow: "none",
+      "& .MuiPaper-root": {
+        boxShadow: "none !important",
+        border: "1px solid #E0E0E0",
+      },
+    },
+    divider: {
+      height: 32,
+      backgroundColor: "#D9DBDD",
+      marginRight: 2,
+      marginTop: "22px",
+    },
+    newItemButton: {
+      backgroundColor: "#FFA726",
+      color: "white",
+      borderRadius: "10px",
+    },
+    paginationButton: (isActive) => ({
+      minWidth: 32,
+      height: 32,
+      marginX: 0.5,
+      color: isActive ? "#1363DF" : "inherit",
+      borderColor: isActive ? "#1363DF" : "transparent",
+      borderWidth: 1,
+      borderStyle: "solid",
+      borderRadius: "4px",
+      "&:hover": { borderColor: "#1363DF" },
+    }),
+    tableContainer: {
+      maxHeight: 450,
+      width: '1372px',
+      overflowY: 'auto',
+      '&::-webkit-scrollbar': { display: 'none' },
+      '-ms-overflow-style': 'none',
+      scrollbarWidth: 'none',
+      borderRadius: '2px',
+    },
+    tableCell: (idx) => ({
+      bgcolor: '#F0F3F6',
+      fontWeight: 600,
+      color: '#4E585E',
+      paddingLeft: idx === 0 ? '30px' : '5px',
+      paddingRight: idx === 4 ? '30px' : '5px',
+      borderRight: idx === 2 ? '50px solid transparent' : 'none',
+      width: idx === 3 ? '90px' : 'auto',
+    }),
+    tableRow: {
+      bgcolor: 'white',
+      height: 40,
+      borderBottom: '1px solid #E5E8EB',
+    },
+    statusTypography: (row) => ({
+      color: row.status === 'Active' ? '#003D20' : '#3D0600',
+      bgcolor: row.status === 'Active' ? '#CBF2E0' : '#FFDAD3',
+      borderRadius: '4px',
+      width: '70px',
+      height: '30px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginLeft: '20px',
+    }),
+    actionIconButton: {
+      paddingLeft: '5px',
+      paddingRight: '30px',
+    },
+    menu: {
+      boxShadow: 'none',
+      '& .MuiPaper-root': { boxShadow: 'none' },
+    },
+    paginationContainer: {
+      width: '98%',
+      mt: 'auto',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingLeft: '30px',
+      paddingRight: '30px',
+    },
+    selectInput: {
+      mr: 2,
+      width: 100,
+      height: 32,
+      fontSize: '0.85rem',
+      '& .MuiOutlinedInput-root': { borderRadius: '4px', borderColor: '#D9DBDD' },
+      '&:hover .MuiOutlinedInput-root': { borderColor: '#FFA048' },
+    },
+    recordsText: {
+      marginLeft: '20px',
+      fontSize: '13px',
+      color: '#666666',
+    },
+    paginationButtonsContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      marginRight: '-100px',
+    },
+}
+  
+  export default styles;
+  

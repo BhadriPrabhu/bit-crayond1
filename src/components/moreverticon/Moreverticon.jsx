@@ -2,23 +2,12 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import BulkImportModal from './BulkimportModal';
 import BulkExportModal from './BulkexportMore';
+import styles from './styles_morevert';
 
 function Moreverticons1({ onBulkImportClick, onBulkExportClick  }) {
   return (
     <Box 
-      sx={{
-        width: '184px',
-        height: '84px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        borderRadius: '8px',
-        border: '1px solid #FFFFFF',
-        paddingTop: '14px',
-        paddingLeft: '15px',
-        boxShadow:'none'
-
-      }}
+      sx={styles.morevert}
     >
       <Typography onClick={onBulkImportClick} sx={{ cursor: 'pointer' }}>
         Bulk import items
