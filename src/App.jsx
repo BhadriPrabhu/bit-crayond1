@@ -1,13 +1,11 @@
-import "./App.css";
-import Totalcard from "./Bhadri-card/Total-card"; 
-
+import React from 'react';
+import AddLoyality from './components/addLoyalityProgram';
 function App() {
   return (
-    <div className="el1">
-      <Totalcard/>
-    </div>  
-
-
-  )
+    <>
+      <AddLoyality></AddLoyality>
+    </>
+  );
 }
+
 export default App;
