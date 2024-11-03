@@ -1,4 +1,4 @@
-import React from "react";
+
 import MerchantView from "../../components/customerView/merchantView";
 import Customer from "../../assets/icons/customer";
 import Calender from "../../assets/icons/calender";
@@ -197,15 +197,7 @@ export default function customerViewIndex() {
         phnum={phnum}
         
       />
-       {/*
-      <Trial1
-      customername="Sam Richard"
-      basicinfotxt="Basic information"
-      addcredits="Add creadits"
-      edit="Edit"
-      offers={offers}
-      transaction="Transaction history"
-      info={info}/>*/}
+      
     </>
   );
 }

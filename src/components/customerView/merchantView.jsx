@@ -2,15 +2,11 @@ import * as React from "react";
 import styles from "./styles";
 import Discount from "../../assets/icons/discount";
 import Customer from "../../assets/icons/customer";
-import Bell from "../../assets/icons/bell";
-import Boy from "../../assets/images/boy";
-import search from "../../assets/icons/search";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm } from "../../redux/slices/searchSlice";
+import PropTypes from 'prop-types';
 import {
-  AppBar,
   Box,
-  Toolbar,
   Typography,
   Button,
   IconButton,
@@ -21,17 +17,13 @@ import {
   TextField,
   Divider,
   Grid2,
-  Input,
   FilledInput,
-  OutlinedInput,
   InputLabel,
   InputAdornment,
-  FormHelperText,
   FormControl,
   Paper,
   InputBase,
 } from "@mui/material";
-import ArrowIcon from "../../assets/icons/arrow";
 import DropdownArrow from "../../assets/icons/dropdownarrow";
 import Add from "../../assets/icons/add";
 import Pencil from "../../assets/icons/pencil";
@@ -46,6 +38,7 @@ import ArrowRightIcon from "../../assets/icons/arrowrighticon";
 import { Select, MenuItem } from "@mui/material";
 import { Search } from "@mui/icons-material";
 
+
 export default function MerchantView(props) {
   const {
     customername,
@@ -59,7 +52,6 @@ export default function MerchantView(props) {
     amount,
     sar,
     equivalent,
-    creditsnum,
     remarks,
     edittxt,
     phnum,
@@ -127,28 +119,7 @@ export default function MerchantView(props) {
   return (
     <>
       <Grid2 sx={styles.wholescreen}>
-        <Box sx={styles.header}>
-          <AppBar position="static" sx={styles.appbar}>
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={styles.arrowiconbtn}
-              >
-                <ArrowIcon />
-              </IconButton>
-              <Typography sx={styles.customername}>{customername}</Typography>
-              <Button color="inherit">
-                <Bell />
-              </Button>
-              <Box>
-                <Boy />
-              </Box>
-            </Toolbar>
-          </AppBar>
-        </Box>
+        
         <Box sx={styles.twocontainers}>
           <Grid2 sx={styles.infogrid}>
             <Box sx={styles.infobox}>
@@ -195,11 +166,11 @@ export default function MerchantView(props) {
               <Box sx={styles.transactionhistorytxt}>{transaction}</Box>
               <Box sx={styles.searchbox}>
                 <Paper component="form" sx={styles.searchbar}>
-                  <IconButton sx={styles.searchicon} aria-label="menu">
+                  <IconButton sx={{ p: "10px" }} aria-label="menu">
                     <Search />
                   </IconButton>
                   <InputBase
-                    sx={styles.inputsearch}
+                    sx={{ ml: 1, flex: 1 }}
                     placeholder="Search by offer"
                     inputProps={{ "aria-label": "Search by offer" }}
                     value={searchTerm}
@@ -249,8 +220,8 @@ export default function MerchantView(props) {
                 ) : (
                   <Box sx={styles.noResults}>No results found</Box>
                 ) }
-
-                <TablePagination sx={styles.TablePagination}
+                
+                  <TablePagination sx={styles.TablePagination}
                   count={filteredOffers.length}
                   page={page}
                   onPageChange={handleChangePage}
@@ -258,12 +229,6 @@ export default function MerchantView(props) {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   rowsPerPageOptions={[5, 10, 15]}
                   labelRowsPerPage={""}
-                  labelDisplayedRows={({ from, to, count }) => (
-                    <span style={styles.show}>
-                      showing {from}-{to} of{" "}
-                      {count !== -1 ? count : `more than ${to}`} records
-                    </span>
-                  )}
                   SelectProps={{
                     renderValue: (selected) => (
                       <Box sx={styles.rowperpage}>
@@ -273,7 +238,14 @@ export default function MerchantView(props) {
                     ),
                     IconComponent: () => null, 
                   }} 
+                  labelDisplayedRows={({ from, to, count }) => (
+                    <Box style={styles.show}>
+                      showing {from}-{to} of{" "}
+                      {count !== -1 ? count : `more than ${to}`} records
+                    </Box>
+                  )}
                  
+                
                   ActionsComponent={({
                     count,
                     page,
@@ -283,12 +255,11 @@ export default function MerchantView(props) {
                     <Box sx={styles.arrownav}>
                       <IconButton
                         onClick={() => onPageChange(null, page - 1)}
-                        disabled={page === 0}
-                        sx={{ marginLeft: "480px" }}
+                        disabled={page === 0}   
                       >
                         <ArrowLeftIcon />
                       </IconButton>
-                      <Box sx={styles.pagenumbox}>{page + 1}</Box>
+                     <Box sx={styles.pagenumbox}>{page + 1}</Box>
                       <IconButton
                         onClick={() => onPageChange(null, page + 1)}
                         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
@@ -298,7 +269,7 @@ export default function MerchantView(props) {
                     </Box>
                   )}
                 />
-                
+              
               </Box>
             </Box>
           </Grid2>
@@ -331,7 +302,7 @@ export default function MerchantView(props) {
             </InputLabel>
             <FilledInput
               id="filled-adornment-amount"
-              value={credits} // Use credits state for input value
+              value={credits}
               onChange={handleCreditsChange}
               onKeyDown={handleKeyPress}
               endAdornment={
@@ -460,3 +431,21 @@ export default function MerchantView(props) {
     </>
   );
 }
+MerchantView.propTypes = {
+  customername: PropTypes.string.isRequired,
+  basicinfotxt: PropTypes.string.isRequired,
+  addcredits: PropTypes.string.isRequired,
+  edit: PropTypes.func.isRequired,
+  info: PropTypes.any.isRequired, // Adjust with specific type if known
+  transaction: PropTypes.any.isRequired, // Adjust with specific type if known
+  offers: PropTypes.any.isRequired, // Adjust with specific type if known
+  lcredits: PropTypes.number.isRequired,
+  amount: PropTypes.number.isRequired,
+  sar: PropTypes.string.isRequired,
+  equivalent: PropTypes.string.isRequired,
+  creditsnum: PropTypes.number.isRequired,
+  remarks: PropTypes.string.isRequired,
+  edittxt: PropTypes.string.isRequired,
+  phnum: PropTypes.string.isRequired,
+  save: PropTypes.func.isRequired,
+};
