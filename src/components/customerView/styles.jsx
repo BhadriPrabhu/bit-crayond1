@@ -1,5 +1,4 @@
-import { TablePagination } from "@mui/material";
-import { margin } from "@mui/system";
+
 
 const styles = {
   wholescreen: {
@@ -14,32 +13,7 @@ const styles = {
     },
     scrollbarWidth: 'none', 
   },
-  header: {
-    position:'fixed',
-    top: 0,
-    width:'94%',
-    flexGrow: 0,
-    marginLeft: "96px",
-    zIndex: 1000,
-  },
-  appbar: {
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    boxShadow: "0px 4px 12px 0px rgba(0, 0, 0, 0.04)",
-  },
-  customername: {
-    flexGrow: 1,
-    color: "rgba(2, 17, 26, 1)",
-    marginTop: "10px",
-  },
-  arrowiconbtn: {
-    mr: 2,
-    borderRadius: "63px",
-    backgroundColor: "rgba(240, 243, 246, 1)",
-    border: "1 px solid rgba(229, 232, 235, 1)",
-    width: "40px",
-    height: "40px",
-    marginTop: "10px",
-  },
+ 
   twocontainers:{
     display: 'flex',
     flexDirection: 'column',
@@ -57,7 +31,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    width: "60%",
+    width: "70%",
     //overflow: "hidden",
     borderRadius: "8px",
     overflowY: "auto",
@@ -262,7 +236,7 @@ const styles = {
     fontSize: "14px",
     fontWeight: 400,
   },
-  sartxt: {
+  sar1txt: {
     fontSize: "0.55rem", // Change this to your desired size
     lineHeight: "1.5",
     padding: "0 4px",
@@ -468,7 +442,7 @@ const styles = {
       alignItems: "center",
       justifyContent: "center",
       overflowY: 'auto', 
-      bottom:'-140px'
+     
       
     
     },
@@ -479,7 +453,7 @@ const styles = {
       flexDirection: "column",
       alignItems: "flex-start",
       justifyContent: "space-between",
-      width: "60%",
+      width: "70%",
       height:"100%",
       borderRadius: "8px 8px 0 0",
      
@@ -496,13 +470,6 @@ const styles = {
       marginTop:'20px',
       width:'95%'
     },
-    searchicon:{
-       p: "10px" 
-    },
-    inputsearch:{ 
-      ml: 1, 
-      flex: 1 
-    },
     searchbar:{
       p: "2px 4px",
       display: "flex",
@@ -513,7 +480,7 @@ const styles = {
       boxShadow:'none'
     },
     scrollablecontent: {
-      height: "360px", 
+      height: "200px", 
       overflowY: "auto",
       overflowX: "hidden",
       width:'100%',
@@ -531,6 +498,7 @@ const styles = {
       alignItems:'center',
       justifyContent:'space-between',
       paddingBottom:'10px',
+      
       
     },
     leftside:{
@@ -615,7 +583,7 @@ const styles = {
       color:'rgba(78, 88, 94, 1)',
       fontSize:'1px',
       fontWeight:500,
-      marginTop:'15px'
+      marginTop:'15px',
     },
     notredeemed:{
       width: "fit-content",
@@ -630,9 +598,16 @@ const styles = {
       marginRight:'20px'
       
     },
-  TablePagination:{
-    borderBottom:'none',
-  },
+    TablePagination: {
+      borderBottom: 'none',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center', 
+      padding: '0 10px', 
+      marginLeft:'-10px'
+      
+    },
   
    pagenumbox:{
     width: "20px",
@@ -644,28 +619,30 @@ const styles = {
     justifyContent: "center",
     color: "rgba(255, 160, 72, 1)",
   },
-  arrownav:{
-    
-      display: "flex",
-      justifyContent: "space-between",
-      ml: 2,
-    
+  arrownav: {
+    display: 'flex',
+    flexDirection:'row',
+    justifyContent:'flex-end',
+   marginLeft:'140%',
+   
+
   },
   rowperpage:{ 
     display: 'flex', 
+    justifyContent:'flex-start',
     alignItems: 'center', 
     border: '1px solid rgba(217, 219, 221, 1)', 
     borderRadius: '4px', 
-    padding: '2px 5px',
-    marginLeft:'-8px' 
+    
+ 
+    
   },
   show:{
      color: "rgba(78, 88, 94, 1)",
-     marginLeft:'-25px'
+    
   },
   divider:{
     width:'96%',
-    //divider
   }
     
 };
