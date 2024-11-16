@@ -20,6 +20,17 @@ const stylesItem = {
           
       }
   },
+  "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "rgb(221, 222, 224)",
+      },
+      "&:hover fieldset": {
+        borderColor: "rgb(221, 222, 224)",
+      },
+      "&.Mui-focused fieldset": {
+        border: "1px solid rgb(221, 222, 224)",
+      },
+    },
   },
   itemContainerStyle: {
     display: "flex",

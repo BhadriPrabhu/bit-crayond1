@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Switch, TextField, InputAdornment } from '@mui/material';
 import Colorpicker from '../icon/colorpicker';
 import stylesCategoryColor from './stylesCategorycolor';
+import AllSwitches from '../icon/switch';
 
 const CategoryColorPicker = () => {
   const [color, setColor] = useState('#000000');
@@ -12,16 +13,9 @@ const CategoryColorPicker = () => {
 
   return (
     <Box sx={stylesCategoryColor.container}>
-      <Typography sx={stylesCategoryColor.title}>
+      <Typography sx={{...stylesCategoryColor.title,display:"flex",justifyContent:"space-between"}}>
         Customer loyalty page customization 
-        <Switch 
-          sx={{ 
-            position: "absolute", 
-            right: "3px", 
-            '& .MuiSwitch-switchBase.Mui-checked': { color: 'rgb(255, 160, 72)' }, 
-            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: 'rgb(255, 160, 72)' } 
-          }} 
-        />
+        <AllSwitches></AllSwitches>
       </Typography>
       <TextField
         sx={stylesCategoryColor.textField}

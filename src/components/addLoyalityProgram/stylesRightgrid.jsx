@@ -5,7 +5,7 @@ const stylesRightGrid = {
     boxprovider:{ display: "flex", gap: "20px", width: "100%", marginTop: "20px" },
     imgupload:{
         display: "flex",
-        width: '425px',
+        width: '400px',
         height: '200px',
         flexDirection: "column",
         gap: "10px",
@@ -39,9 +39,6 @@ const stylesRightGrid = {
         height: 'auto',
     },
     textfieldstyle:{
-        "& .MuiFilledInput-root": {
-            backgroundColor: "transparent",
-        },
         "& .MuiFilledInput-underline:before": {
             borderBottom: "none",
         },
@@ -70,6 +67,15 @@ const stylesRightGrid = {
         borderRadius: 1.5,
         color: '#000'
     },
+
+    dateTextfield: {
+        width: "300px", padding: "16px", backgroundColor: "#f5f5f5", borderRadius: "8px", boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+        "& .MuiPickersDay-dayWithMargin": { margin: "4px" },
+        "& .MuiPickersDay-root": { color: "#555", "&.Mui-selected": { backgroundColor: "#FF7043", color: "#fff" } },
+      },
+      
+    stores1: {paddingBottom:"15px",paddingTop:"10px",display:"flex",justifyContent:"space-between"},
+    stores2: {display:"flex",justifyContent:"space-between"},
   };
   
   export default stylesRightGrid;

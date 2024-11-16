@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import React, { useState, useRef, useEffect } from 'react';
+import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { Box, Button, IconButton, InputAdornment, Radio, RadioGroup, Switch, TextField, Typography } from '@mui/material';
+import dayjs from 'dayjs';
+import { Box, IconButton, InputAdornment, TextField, Typography, Button, Radio, RadioGroup, FormControl, FormControlLabel, Switch } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ItemsColorPicker from './itemsColorPicker';
 import Upload from '../icon/upload';
@@ -10,30 +10,60 @@ import CategoryColorPicker from './categoryColorPicker';
 import SpecificItems from './specificItems';
 import { SpecificCategory } from './specificCategory';
 import Delete from '../icon/delete';
-import { FormControl, FormControlLabel } from '@mui/material';
 import Calender from '../icon/calender';
 import stylesRightGrid from './stylesRightgrid';
+import AllSwitches from '../icon/switch';
 
 const RightSideGrid = () => {
   const [startDate, setStartDate] = useState(null);
+  const [startDateDisplay, setStartDateDisplay] = useState("");
   const [endDate, setEndDate] = useState(null);
+  const [endDateDisplay, setEndDateDisplay] = useState("");
+  const [isStartCalendarOpen, setIsStartCalendarOpen] = useState(false);
+  const [isEndCalendarOpen, setIsEndCalendarOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [selectedOption, setSelectedOption] = useState("Specific category");
 
+  const startCalendarRef = useRef(null);
+  const endCalendarRef = useRef(null);
+
+  const dateFormat = "MM/DD/YYYY";
 
   const handleOptionChange = (event) => setSelectedOption(event.target.value);
 
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
+  const handleStartDateChange = (newValue) => {
+    if (newValue) {
+      setStartDate(newValue);
+      setStartDateDisplay(newValue.format(dateFormat));
+      setIsStartCalendarOpen(false);
+    }
+  };
+
+  const handleEndDateChange = (newValue) => {
+    if (newValue) {
+      setEndDate(newValue);
+      setEndDateDisplay(newValue.format(dateFormat));
+      setIsEndCalendarOpen(false);
+    }
+  };
+
+  const handleStartTextFieldChange = (event) => {
+    const input = event.target.value;
+    setStartDateDisplay(input);
+    const parsedDate = dayjs(input, dateFormat, true);
+    if (parsedDate.isValid()) {
+      setStartDate(parsedDate);
+    }
+  };
+
+  const handleEndTextFieldChange = (event) => {
+    const input = event.target.value;
+    setEndDateDisplay(input);
+    const parsedDate = dayjs(input, dateFormat, true);
+    if (parsedDate.isValid()) {
+      setEndDate(parsedDate);
+    }
+  };
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -55,60 +85,100 @@ const RightSideGrid = () => {
 
   const getFileSizeInKb = (file) => (file.size / 1024).toFixed(2);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isStartCalendarOpen && startCalendarRef.current && !startCalendarRef.current.contains(event.target)) {
+        setIsStartCalendarOpen(false);
+      }
+      if (isEndCalendarOpen && endCalendarRef.current && !endCalendarRef.current.contains(event.target)) {
+        setIsEndCalendarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isStartCalendarOpen, isEndCalendarOpen]);
+
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+
   return (
     <>
-      <Box sx={stylesRightGrid.container}>
-        <Box sx={stylesRightGrid.innercontainer}>
-          <Typography sx={{ fontWeight: "bold", fontSize: "20px" }}>Program configuration</Typography>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Box sx={stylesRightGrid.boxprovider}>
-              <DatePicker
-                label="Start Date"
-                value={startDate}
-                onChange={(newValue) => setStartDate(newValue)}
-                sx={{ flex: "1" ,"& .MuiDatePickerToolbar-root":{"&:hover": {borderColor:"#D9DBDD"}}}}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="filled"
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Calender style={{ color: "#4E585E" }} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
+    <Box sx={stylesRightGrid.container}>
+      <Box sx={stylesRightGrid.innercontainer}>
+        <Typography sx={{ fontWeight: "bold", fontSize: "20px" }}>Program configuration</Typography>
+        <Box sx={stylesRightGrid.boxprovider}>
+          <TextField
+            sx={{ ...stylesRightGrid.textfieldstyle, flex: 1, position: "relative" }}
+            variant="filled"
+            label="Start date"
+            value={startDateDisplay}
+            onChange={handleStartTextFieldChange}
+            placeholder={dateFormat}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setIsStartCalendarOpen(!isStartCalendarOpen)} sx={{ cursor: "pointer" }}>
+                    <Calender />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            inputProps={{
+              maxLength: 10,
+              pattern: "\\d{2}/\\d{2}/\\d{4}",
+            }}
+          />
+          {isStartCalendarOpen && (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Box ref={startCalendarRef} sx={{ position: "absolute", bottom: "130px",zIndex:1000 }}>
+                <DateCalendar value={startDate} onChange={handleStartDateChange} sx={stylesRightGrid.dateTextfield}/>
+              </Box>
+            </LocalizationProvider>
+          )}
+          
+          <TextField
+            sx={{ ...stylesRightGrid.textfieldstyle, flex: 1 }}
+            variant="filled"
+            label="End date"
+            value={endDateDisplay}
+            onChange={handleEndTextFieldChange}
+            placeholder={dateFormat}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setIsEndCalendarOpen(!isEndCalendarOpen)} sx={{ cursor: "pointer" }}>
+                    <Calender />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            inputProps={{
+              maxLength: 10,
+              pattern: "\\d{2}/\\d{2}/\\d{4}",
+            }}
+          />
+          {isEndCalendarOpen && (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Box ref={endCalendarRef} sx={{ position: "absolute", bottom: "130px", right: "150px",zIndex:1000 }}>
+                <DateCalendar value={endDate} onChange={handleEndDateChange} sx={stylesRightGrid.dateTextfield} />
+              </Box>
+            </LocalizationProvider>
+          )}
+        </Box>
 
-              <DatePicker
-                label="End Date"
-                value={endDate}
-                onChange={(newValue) => setEndDate(newValue)}
-                sx={{ flex: 1 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="filled"
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Calender style={{ color: "#4E585E" }} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    sx={{
-                      '& .MuiFilledInput-root': { backgroundColor: 'transparent', borderRadius: '8px' },
-                    }}
-                  />
-                )}
-              />
-            </Box>
-          </LocalizationProvider>
-          <Box>
+        <Box>
             <Typography>Program image</Typography>
             {!uploadedFile ? (
               <Box sx={stylesRightGrid.imgupload}>
@@ -166,14 +236,14 @@ const RightSideGrid = () => {
             variant="filled"
             label="Offer code"
           />
-          <Box sx={{ padding: "10px 25px" }}>
+          <Box sx={{ padding: "10px 0px 10px 11px" }}>
             <Typography sx={{ fontSize: "small", color: "rgb(78, 88, 94)" }}>Applicable stores</Typography>
-            <Box sx={{ display: "flex", padding: "10px 0px", position: "relative" }}><Typography>Arabian Night Crest - Flamingo Mall</Typography><Switch sx={{ position: "absolute", right: "20px", '& .MuiSwitch-switchBase.Mui-checked': { color: 'rgb(255, 160, 72)' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: 'rgb(255, 160, 72)' } }}></Switch>  </Box>
-            <Box sx={{ display: "flex", position: "relative", paddingBottom: "10px" }}><Typography>Arabian Night Crest - Sahara Mall</Typography><Switch sx={{ position: "absolute", right: "20px", '& .MuiSwitch-switchBase.Mui-checked': { color: 'rgb(255, 160, 72)' }, '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { bgcolor: 'rgb(255, 160, 72)' } }}></Switch>  </Box>
+            <Box sx={stylesRightGrid.stores1}><Typography>Arabian Night Crest - Flamingo Mall</Typography><AllSwitches style={{height:"20px",width:"14px"}}/></Box>
+            <Box sx={stylesRightGrid.stores2}><Typography>Arabian Night Crest - Sahara Mall</Typography><AllSwitches/> </Box>
           </Box>
-        </Box>
       </Box>
-      <Box sx={{ bgcolor: "white", padding: "25px", marginTop: "30px", borderRadius: "8px" }}>
+    </Box>
+    <Box sx={{ bgcolor: "white", padding: "25px", marginTop: "30px", borderRadius: "8px" }}>
         <Typography sx={{ fontWeight: "bold", fontSize: "18px", paddingBottom: "10px" }}>Item configuration</Typography>
         <Box sx={{ display: "flex", alignItems: "center", position: "relative" }}>
           <Typography>Customer needs to purchase</Typography>
@@ -218,4 +288,4 @@ const RightSideGrid = () => {
   );
 };
 
-export default RightSideGrid; 
+export default RightSideGrid;

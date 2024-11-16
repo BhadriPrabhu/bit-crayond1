@@ -3,6 +3,7 @@ import { Box, Typography, Switch, TextField, InputAdornment } from '@mui/materia
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Colorpicker from '../icon/colorpicker';
 import stylesItemsColor from './stylesItemsColor';
+import AllSwitches from '../icon/switch';
 
 const ItemsColorPicker = () => {
     const [color, setColor] = useState('#000000');
@@ -13,9 +14,9 @@ const ItemsColorPicker = () => {
 
     return (
         <Box sx={stylesItemsColor.containerStyle}>
-            <Typography sx={stylesItemsColor.titleStyle}>
+            <Typography sx={{...stylesItemsColor.titleStyle,display:"flex",justifyContent:"space-between",}}>
                 Customer loyalty page customization
-                <Switch sx={stylesItemsColor.switchStyle}></Switch>
+                <AllSwitches></AllSwitches>
             </Typography>
             <TextField
                 sx={stylesItemsColor.textFieldStyle}

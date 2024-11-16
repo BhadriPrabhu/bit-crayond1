@@ -8,18 +8,7 @@ const stylesItemsColor = {
     titleStyle: {
       width: "100%",
       display: "flex",
-      position: "relative",
       fontWeight: "bold",
-    },
-    switchStyle: {
-      position: "absolute",
-      right: "3px",
-      '& .MuiSwitch-switchBase.Mui-checked': {
-        color: 'rgb(255, 160, 72)',
-      },
-      '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-        bgcolor: 'rgb(255, 160, 72)',
-      },
     },
     textFieldStyle: {
       "& .MuiFilledInput-root": {

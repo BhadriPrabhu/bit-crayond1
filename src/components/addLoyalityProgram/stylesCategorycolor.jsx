@@ -9,7 +9,6 @@ const stylesCategoryColor = {
     title: {
       width: "100%",
       display: "flex",
-      position: "relative",
       fontWeight: "bold",
     },
     textField: {
